@@ -1,9 +1,8 @@
 #include "file_handling.h"
 //por a estrutura num sitio e a leitura e escrita de ficherios noutro
-int** createBoard(char filename[24], int *varia, char *varia2){
+int** createBoard(char filename[24], int *varia, char *varia2, int *size){
   int **bd;
   FILE *fp;
-  int size[2];
   int i;
   int j;
   int numb;
