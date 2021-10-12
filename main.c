@@ -3,6 +3,7 @@
 #include <string.h>
 #include <getopt.h>
 #include "file_handling.h"
+#include "variants.h"
 
 #define LISTA_OPCOES "s"
 
@@ -13,6 +14,7 @@ int main(int argc, char *argv[])
   int **bd;
   int varia[2];//variavel para coordenadas da variane
   char varia2[2];//variavel com a variante
+  int size[2];
 
   opt = getopt(argc, argv,"s");
   if (opt != -1 && opt == 's')
@@ -25,7 +27,12 @@ int main(int argc, char *argv[])
     char *file_read = argv[optind];//why works? alocar dinamicamente
     char *last4i = &file_read[strlen(file_read)-4];
     if(strncmp(last4i, ".in1", 4) == 0 && FirstSubmission == 1){
-      bd = createBoard(file_read, varia, varia2);;
+      bd = createBoard(file_read, varia, varia2,  size);
+      /*if (!strcmp(varia2, "A1"))
+      {
+        int i = Variant1(varia, varia2, bd, size);
+        printf("\n\n%d", i);
+      }*/
     }else{
       return EXIT_FAILURE;//ver se é preciso algum print
     }
