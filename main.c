@@ -35,3 +35,6 @@ int main(int argc, char *argv[])
 //!main-createboard-decidirVar-varPrint-(continua o loop, por isso pode ser preciso free)-end
 //!tentar tirar includes a mais
 //!ver ultima aula oude o prof explica como dividir os ficheiros
+
+//!refacoring
+//!printing output to file
