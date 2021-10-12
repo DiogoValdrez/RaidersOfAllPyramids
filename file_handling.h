@@ -1,7 +1,4 @@
 #include <stdio.h>
-typedef struct _board
-{
-  int color;
-}board;
+#include <stdlib.h>
 
-board* creatBoard(char filename[24]);
+int** createBoard(char filename[24], int *varia, char *varia2);
