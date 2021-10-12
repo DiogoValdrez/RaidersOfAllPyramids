@@ -1,9 +1,9 @@
 CC=gcc
-CFLAGS= -Wall -g -std=c11 -O3
+CFLAGS= -Wall -g -std=c99
 
 PROJECT= roap
 
-OBJ_FILES= main.o 
+OBJ_FILES= main.o file_handling.o
 
 $(PROJECT): $(OBJ_FILES)
 	gcc $(CFLAGS) -o $(PROJECT) $(OBJ_FILES) 
