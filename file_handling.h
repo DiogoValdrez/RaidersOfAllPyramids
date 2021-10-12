@@ -2,7 +2,9 @@
 #define FILE_HANDLING_HPP
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include "variants.h"
 
-int** createBoard(char filename[24], int *varia, char *varia2, int *size);
+int** createBoard(char filename[24]);
 
 #endif
