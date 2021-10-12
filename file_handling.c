@@ -8,6 +8,8 @@ int** createBoard(char filename[24], int *varia, char *varia2, int *size){
   int numb;
   int a;
   int b;
+  int varia6[2];
+
   fp = fopen(filename, "r");//fazer verificações
   fscanf(fp, "%d" , size);//em vez de ler palavra a palavra, ler linha a linha, ou afinal não
   do{
@@ -33,6 +35,11 @@ int** createBoard(char filename[24], int *varia, char *varia2, int *size){
       fscanf(fp, "%d" , &(varia[i]));
     }
     fscanf(fp, "%s", varia2);
+    if(!strcmp(varia2, "A6")){
+      for(i = 0; i<2; i++){
+        fscanf(fp, "%d" , &(varia6[i]));
+      }
+    }
     fscanf(fp, "%d", &numb);
     for(i = 0; i<numb; i++){
       fscanf(fp, "%d", &a);
