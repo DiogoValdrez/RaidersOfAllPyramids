@@ -3,7 +3,6 @@
 #include <string.h>
 #include <getopt.h>
 #include "file_handling.h"
-#include "variants.h"
 
 #define LISTA_OPCOES "s"
 
@@ -12,9 +11,6 @@ int main(int argc, char *argv[])
   int opt;
   int FirstSubmission = 0; //Variable that holds info about -s option
   int **bd;
-  int varia[2];//variavel para coordenadas da variane
-  char varia2[2];//variavel com a variante
-  int size[2];
 
   opt = getopt(argc, argv,"s");
   if (opt != -1 && opt == 's')
@@ -24,18 +20,18 @@ int main(int argc, char *argv[])
   }
 
   if (argv[optind] != NULL){
-    char *file_read = argv[optind];//why works? alocar dinamicamente
+    char *file_read = argv[optind];//!why works? alocar dinamicamente
     char *last4i = &file_read[strlen(file_read)-4];
     if(strncmp(last4i, ".in1", 4) == 0 && FirstSubmission == 1){
-      bd = createBoard(file_read, varia, varia2,  size);
-      /*if (!strcmp(varia2, "A1"))
-      {
-        int i = Variant1(varia, varia2, bd, size);
-        printf("\n\n%d", i);
-      }*/
+      bd = createBoard(file_read);
     }else{
-      return EXIT_FAILURE;//ver se é preciso algum print
+      return EXIT_FAILURE;//!ver se é preciso algum print
     }
   }
   return 0;
 }
+
+//!falta refatorizar
+//!main-createboard-decidirVar-varPrint-(continua o loop, por isso pode ser preciso free)-end
+//!tentar tirar includes a mais
+//!ver ultima aula oude o prof explica como dividir os ficheiros
