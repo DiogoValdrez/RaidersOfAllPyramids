@@ -31,9 +31,19 @@ int main(int argc, char *argv[])
 }
 
 //!falta refatorizar
-//!main-createboard-decidirVar-varPrint-(continua o loop, por isso pode ser preciso free)-end
 //!tentar tirar includes a mais
 //!ver ultima aula oude o prof explica como dividir os ficheiros
+//!segmentation fault quando daas ficheuiro que nao existe ou parecido, ver isto
+//!verificar se não temos argumentos a mais , returns não usados(fscanf, funções, etc)
+//!fazer verificações em cada scanff, malloc, chamada de funções, etc
+
+
+//!verificar se não nos dão coordenadas nojentas ou assim pq o prof vai abusar de certeza
+
+//!Cena do pocinho de tabela demasiado grande
+
+//!ler enunciado bem!!
 
 //!refacoring
 //!printing output to file
+
