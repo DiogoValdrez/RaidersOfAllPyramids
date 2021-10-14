@@ -1,4 +1,5 @@
 #include "file_handling.h"
+#include "variants.h"
 //!por a estrutura num sitio e a leitura e escrita de ficherios noutro
 int** createBoard(char filename[24]){
   int **bd;
@@ -51,6 +52,8 @@ int** createBoard(char filename[24]){
     }
 
     //print para teste
+    
+
     for(i = 0; i<size[0]; i++){
       for (j = 0; j<size[1]; j++){
         printf("%d ", bd[i][j]);
@@ -63,7 +66,16 @@ int** createBoard(char filename[24]){
     if (!strcmp(varia2, "A1")){
       printf("\n%d\n\n", Variant1(varia, varia2, bd, size));
     }
-
+    if (!strcmp(varia2, "A2")){
+      //printf("\n%d\n\n", Variant2_4(varia, varia2, bd, size, 0));
+    }
+    if (!strcmp(varia2, "A3")){
+      printf("\n%d\n\n", Variant3(varia,varia2,bd,size));
+    }
+    if (!strcmp(varia2, "A4")){
+      printf("\n%d\n\n", Variant2_4(varia,varia2,bd,size,-1));
+    }
+  
 
     //free para não termos de usar reallocs
     for(i = 0; i<size[0]; i++){
