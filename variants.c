@@ -244,3 +244,34 @@ int Variant5(int *var_coord, char *varia, int **bd, int *size)
         }
     }
 }
+
+int search(int x, int y, int **bd, int *size, int *obj){
+    if(x==obj[0]-1 && y==obj[1]-1){
+        return 1;
+    }else if(bd[x][y]!=0){//parede ou visitada
+        return 0;
+    }
+    //nova procura
+
+    bd[x][y] = -2;
+
+    //ver se a comparação de x com size esta certa
+    if((x<size[0]-1 && search(x+1,y,bd,size,obj))||
+       (x>0 && search(x-1,y,bd,size,obj))||
+       (y<size[1]-1 && search(x,y+1,bd,size,obj))||
+       (y>0 && search(x,y-1,bd,size,obj))){
+           return 1;
+       }
+    return 0;
+}
+
+int Variant6(int *var_coord, int **bd, int *size, int *obj){
+    if (var_coord[0] > size[0] || var_coord[1] > size[1] || var_coord[0] < 1 || var_coord[1] < 1 ||
+        obj[0] > size[0] || obj[1] > size[1] || obj[0] < 1 || obj[1] < 1){
+        return -2;
+    }
+    if(bd[var_coord[0]-1][var_coord[1]-1] != 0 || bd[obj[0]-1][obj[1]-1] != 0){
+        return 0;
+    }
+    return search(var_coord[0]-1,var_coord[1]-1,bd,size,obj);
+}

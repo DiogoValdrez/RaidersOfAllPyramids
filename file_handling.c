@@ -10,8 +10,8 @@ int** createBoard(char filename[24]){
   int a;
   int b;
   int varia6[2];
-  int varia[2];//variavel para coordenadas da variane
-  char varia2[2];//variavel com a variante
+  int var_coord[2];//variavel para coordenadas da variane
+  char varia[2];//variavel com a variante
   int size[2];
 
   fp = fopen(filename, "r");//!fazer verificações
@@ -36,10 +36,10 @@ int** createBoard(char filename[24]){
     //!verificar os valores do fscanf
 
     for(i = 0; i<2; i++){
-      fscanf(fp, "%d" , &(varia[i]));
+      fscanf(fp, "%d" , &(var_coord[i]));
     }
-    fscanf(fp, "%s", varia2);
-    if(!strcmp(varia2, "A6")){
+    fscanf(fp, "%s", varia);
+    if(!strcmp(varia, "A6")){
       for(i = 0; i<2; i++){
         fscanf(fp, "%d" , &(varia6[i]));
       }
@@ -51,9 +51,27 @@ int** createBoard(char filename[24]){
       fscanf(fp, "%d", &(bd[a-1][b-1]));
     }
 
+    //!depois vamos trocar isto para um ficheiro á parte, mas por enquanto fica aqui
+    if (!strcmp(varia, "A1")){
+      printf("\n%d\n\n", Variant1(var_coord, varia, bd, size));
+    }
+    if (!strcmp(varia, "A2")){
+      printf("\n%d\n\n", Variant2_4(var_coord, varia, bd, size, 0));
+    }
+    if (!strcmp(varia, "A3")){
+      printf("\n%d\n\n", Variant3(var_coord,varia,bd,size));
+    }
+    if (!strcmp(varia, "A4")){
+      printf("\n%d\n\n", Variant2_4(var_coord,varia,bd,size,-1));
+    }
+    if (!strcmp(varia, "A5")){
+      printf("\n%d\n\n", Variant5(var_coord,varia,bd,size));
+    }
+    if (!strcmp(varia, "A6")){
+      printf("\n%d\n\n", Variant6(var_coord,bd,size,varia6));
+    }
+  
     //print para teste
-    
-
     for(i = 0; i<size[0]; i++){
       for (j = 0; j<size[1]; j++){
         printf("%d ", bd[i][j]);
@@ -61,24 +79,6 @@ int** createBoard(char filename[24]){
       printf("\n");
     }
     printf("\n");
-
-    //!depois vamos trocar isto para um ficheiro á parte, mas por enquanto fica aqui
-    if (!strcmp(varia2, "A1")){
-      printf("\n%d\n\n", Variant1(varia, varia2, bd, size));
-    }
-    if (!strcmp(varia2, "A2")){
-      //printf("\n%d\n\n", Variant2_4(varia, varia2, bd, size, 0));
-    }
-    if (!strcmp(varia2, "A3")){
-      printf("\n%d\n\n", Variant3(varia,varia2,bd,size));
-    }
-    if (!strcmp(varia2, "A4")){
-      printf("\n%d\n\n", Variant2_4(varia,varia2,bd,size,-1));
-    }
-    if (!strcmp(varia2, "A5")){
-      printf("\n%d\n\n", Variant5(varia,varia2,bd,size));
-    }
-  
 
     //free para não termos de usar reallocs
     for(i = 0; i<size[0]; i++){
