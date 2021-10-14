@@ -16,7 +16,6 @@ int main(int argc, char *argv[])
   if (opt != -1 && opt == 's')
   {
       FirstSubmission = 1;
-      printf("fd\n");
   }
 
   if (argv[optind] != NULL){

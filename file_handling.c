@@ -75,6 +75,9 @@ int** createBoard(char filename[24]){
     if (!strcmp(varia2, "A4")){
       printf("\n%d\n\n", Variant2_4(varia,varia2,bd,size,-1));
     }
+    if (!strcmp(varia2, "A5")){
+      printf("\n%d\n\n", Variant5(varia,varia2,bd,size));
+    }
   
 
     //free para não termos de usar reallocs
