@@ -42,8 +42,13 @@ int main(int argc, char *argv[])
 
 //!Cena do pocinho de tabela demasiado grande
 
+//!ver plagio
+//!comentar
+//!retornos de todas as funções
+
 //!ler enunciado bem!!
+//!filename só tem 24 maximo de tamanho why???
 
 //!refacoring
-//!printing output to file
+//!2 linhas brancas no fim??
 
