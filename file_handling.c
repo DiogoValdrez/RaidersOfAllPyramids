@@ -58,15 +58,15 @@ int** createBoard(char filename[24]){
 
     //!depois vamos trocar isto para um ficheiro á parte, mas por enquanto fica aqui
     if (!strcmp(varia, "A1")){
-      filePrint(Variant1(var_coord, varia, bd, size), filename);
+      filePrint(Variant1(var_coord, bd, size), filename);
     }else if (!strcmp(varia, "A2")){
-      filePrint(Variant2_4(var_coord, varia, bd, size, 0), filename);
+      filePrint(Variant2_4(var_coord, bd, size, 0), filename);
     }else if (!strcmp(varia, "A3")){
-      filePrint(Variant3(var_coord,varia,bd,size), filename);
+      filePrint(Variant3(var_coord,bd,size), filename);
     }else if (!strcmp(varia, "A4")){
-      filePrint(Variant2_4(var_coord,varia,bd,size,-1), filename);
+      filePrint(Variant2_4(var_coord,bd,size,-1), filename);
     }else if (!strcmp(varia, "A5")){
-      filePrint(Variant5(var_coord,varia,bd,size), filename);
+      filePrint(Variant5(var_coord,bd,size), filename);
     }else if (!strcmp(varia, "A6")){
       filePrint(Variant6(var_coord,bd,size,varia6), filename);
     }

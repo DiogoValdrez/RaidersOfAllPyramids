@@ -1,6 +1,6 @@
 #include "variants.h"
 
-int Variant1(int *var_coord, char *varia, int **bd, int *size)
+int Variant1(int *var_coord, int **bd, int *size)
 {
     if (var_coord[0] > size[0] || var_coord[1] > size[1] || var_coord[0] < 1 || var_coord[1] < 1)
     {
@@ -9,7 +9,7 @@ int Variant1(int *var_coord, char *varia, int **bd, int *size)
     return bd[var_coord[0] - 1][var_coord[1] - 1];
 }
 
-int Variant2_4(int *var_coord, char *varia, int **bd, int *size, int piece)
+int Variant2_4(int *var_coord, int **bd, int *size, int piece)
 {
     if (var_coord[0] > size[0] || var_coord[1] > size[1] || var_coord[0] < 1 || var_coord[1] < 1)
     {
@@ -107,7 +107,7 @@ int Variant2_4(int *var_coord, char *varia, int **bd, int *size, int piece)
 
 
 
-int Variant3(int *var_coord, char *varia, int **bd, int *size)
+int Variant3(int *var_coord, int **bd, int *size)
 {
     if (var_coord[0] > size[0] || var_coord[1] > size[1] || var_coord[0] < 1 || var_coord[1] < 1)
     {
@@ -201,7 +201,7 @@ int Variant3(int *var_coord, char *varia, int **bd, int *size)
 }
 
 
-int Variant5(int *var_coord, char *varia, int **bd, int *size)
+int Variant5(int *var_coord, int **bd, int *size)
 {
     if (var_coord[0] > size[0] || var_coord[1] > size[1] || var_coord[0] < 1 || var_coord[1] < 1)
     {
