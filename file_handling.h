@@ -6,5 +6,6 @@
 #include "variants.h"
 
 int** createBoard(char filename[24]);
+int filePrint(int value, char filename[24]);
 
 #endif
