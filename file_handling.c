@@ -1,7 +1,7 @@
 #include "file_handling.h"
 #include "variants.h"
 //!por a estrutura num sitio e a leitura e escrita de ficherios noutro
-int** createBoard(char filename[24]){
+int** createBoard(char *filename){
   int **bd;
   FILE *fp;
   int i;
@@ -90,7 +90,7 @@ int** createBoard(char filename[24]){
   fclose(fp);
   return bd;
 }
-int filePrint(int value, char filename[24]){
+int filePrint(int value, char *filename){
   FILE *fp;
 
   fp = fopen(filename, "a");
