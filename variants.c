@@ -135,7 +135,7 @@ int Variant3(int *var_coord, int **bd, int *size)
             }
         }else
         {
-            if(bd[var_coord[0]-1][var_coord[1]-2] > 0 || bd[var_coord[0]][var_coord[1]] > 0 || bd[var_coord[0]-1][var_coord[1]] > 0)
+            if(bd[var_coord[0]-1][var_coord[1]-2] > 0 || bd[var_coord[0]][var_coord[1]-1] > 0 || bd[var_coord[0]-1][var_coord[1]] > 0)
             {
                 return 1;
             }else{

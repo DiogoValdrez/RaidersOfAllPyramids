@@ -10,7 +10,8 @@ int main(int argc, char *argv[])
 {
   int opt;
   int FirstSubmission = 0; //Variable that holds info about -s option
-  int **bd;
+  char *file_read;
+  char *last4i;
 
   opt = getopt(argc, argv,"s");
   if (opt != -1 && opt == 's')
@@ -19,35 +20,27 @@ int main(int argc, char *argv[])
   }
 
   if (argv[optind] != NULL){
-    char *file_read = argv[optind];//!why works? alocar dinamicamente
-    char *last4i = &file_read[strlen(file_read)-4];
+    file_read = argv[optind];
+    last4i = &file_read[strlen(file_read)-4];
     if(strncmp(last4i, ".in1", 4) == 0 && FirstSubmission == 1){
-      bd = createBoard(file_read);
+    createBoard(file_read);
     }else{
-      return EXIT_FAILURE;//!ver se é preciso algum print
+      exit(0);//!ver se é preciso algum print
     }
   }
-  return 0;
+  exit(0);
 }
 
 //!falta refatorizar
 //!tentar tirar includes a mais
-//!ver ultima aula oude o prof explica como dividir os ficheiros
-//!segmentation fault quando daas ficheuiro que nao existe ou parecido, ver isto
+
 //!verificar se não temos argumentos a mais , returns não usados(fscanf, funções, etc)
-//!fazer verificações em cada scanff, malloc, chamada de funções, etc
+//!Cena de tabela demasiado grande
 
-
-//!verificar se não nos dão coordenadas nojentas ou assim pq o prof vai abusar de certeza
-
-//!Cena do pocinho de tabela demasiado grande
-
-//!ver plagio
+//!ver indice de plagio
 //!comentar
-//!retornos de todas as funções
 
 //!ler enunciado bem!!
-//!filename só tem 24 maximo de tamanho why???
 
 //!refacoring
 //!2 linhas brancas no fim??

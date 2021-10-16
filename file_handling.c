@@ -1,7 +1,7 @@
 #include "file_handling.h"
 #include "variants.h"
-//!por a estrutura num sitio e a leitura e escrita de ficherios noutro
-int** createBoard(char *filename){
+
+void createBoard(char *filename){
   int **bd;
   FILE *fp;
   int i;
@@ -13,20 +13,37 @@ int** createBoard(char *filename){
   int var_coord[2];//variavel para coordenadas da variane
   char varia[2];//variavel com a variante
   int size[2];
+  char *extra;
 
-  fp = fopen(filename, "r");//!fazer verificações
+  if((fp = fopen(filename, "r"))==NULL){
+    exit(0);
+  }
 
-  char *extra = &filename[strlen(filename)-4];//!isto destroi o filename,depois arrajamos
+  extra = &filename[strlen(filename)-4];
   *extra = '\0';
-  strcat(filename, ".sol1");
+  strcat(filename, ".sol1");//!no retrun value for error
 
-  fscanf(fp, "%d" , size);
+  if(!fscanf(fp, "%d" , size)){
+    fclose(fp);
+    exit(0);
+  }
   do{
-    fscanf(fp, "%d" , &(size[1]));
+    if(!fscanf(fp, "%d" , &(size[1]))){
+      fclose(fp);
+      exit(0);
+    }
 
-    bd = (int **)malloc(sizeof(int*)*size[0]);//fazer verificações
+    if((bd = (int **)malloc(sizeof(int*)*size[0]))==NULL){
+      exit(0);
+    }
     for(i = 0; i<size[0]; i++){
-      bd[i] = (int*)malloc(sizeof(int)*size[1]);
+      if((bd[i] = (int*)malloc(sizeof(int)*size[1]))==NULL){
+        for(j = 0; j<i; j++){
+          free(bd[j]);
+        }
+        free(bd);
+        exit(0);
+      }
     } 
     for(i = 0; i<size[0]; i++){
       for (j = 0; j<size[1]; j++){
@@ -35,25 +52,62 @@ int** createBoard(char *filename){
     }
 
 
-    //!ter atenção para caso não haver uma 3 coluna
-    //!o prof não tinha um mostrador de labirinto?
     //!ter atenção caso o numb esteja errado
-    //!verificar os valores do fscanf
 
     for(i = 0; i<2; i++){
-      fscanf(fp, "%d" , &(var_coord[i]));
-    }
-    fscanf(fp, "%s", varia);
-    if(!strcmp(varia, "A6")){
-      for(i = 0; i<2; i++){
-        fscanf(fp, "%d" , &(varia6[i]));
+      if(!fscanf(fp, "%d" , &(var_coord[i]))){//!make function to do this verification
+      freeB(bd, size);
+      fclose(fp);
+      exit(0);
       }
     }
-    fscanf(fp, "%d", &numb);
+    if(!fscanf(fp, "%s", varia)){
+      freeB(bd, size);
+      fclose(fp);
+      exit(0);
+      }
+    if(!strcmp(varia, "A6")){
+      for(i = 0; i<2; i++){
+        if(!fscanf(fp, "%d" , &(varia6[i]))){
+          freeB(bd, size);
+          fclose(fp);
+          exit(0);
+        }
+      }
+    }
+    
+    if(!fscanf(fp, "%d", &numb)){
+      freeB(bd, size);
+      fclose(fp);
+      exit(0);
+    }
     for(i = 0; i<numb; i++){
-      fscanf(fp, "%d", &a);
-      fscanf(fp, "%d", &b);
-      fscanf(fp, "%d", &(bd[a-1][b-1]));//!da fuck, ivalide read of size 8
+      
+      if(!fscanf(fp, "%d", &a)){
+        freeB(bd, size);
+        fclose(fp);
+        exit(0);
+      }
+      /*if(a<0||a>size[0]){
+        freeB(bd, size);
+        fclose(fp);
+        exit(0);
+      }*/
+      if(!fscanf(fp, "%d", &b)){
+        freeB(bd, size);
+        fclose(fp);
+        exit(0);
+      }
+      /*if(b<0||b>size[1]){
+        freeB(bd, size);
+        fclose(fp);
+        exit(0);
+      } */   
+      if(!fscanf(fp, "%d", &(bd[a-1][b-1]))){
+        freeB(bd, size);
+        fclose(fp);
+        exit(0);
+      }
     }
 
     //!depois vamos trocar isto para um ficheiro á parte, mas por enquanto fica aqui
@@ -70,8 +124,9 @@ int** createBoard(char *filename){
     }else if (!strcmp(varia, "A6")){
       filePrint(Variant6(var_coord,bd,size,varia6), filename);
     }
+
   
-    //print para teste
+    /*
     for(i = 0; i<size[0]; i++){
       for (j = 0; j<size[1]; j++){
         printf("%d ", bd[i][j]);
@@ -79,23 +134,29 @@ int** createBoard(char *filename){
       printf("\n");
     }
     printf("\n");
+    */
+    
+    freeB(bd, size);
 
-    //free para não termos de usar reallocs
-    for(i = 0; i<size[0]; i++){
-      free(bd[i]);
-    }
-    free(bd);
-
-  }while(fscanf(fp, "%d" , size)==1);//!ver se se escreve assim o do while
+  }while(fscanf(fp, "%d" , size)==1);
   fclose(fp);
-  return bd;
+  return;
 }
-int filePrint(int value, char *filename){
+void filePrint(int value, char *filename){
   FILE *fp;
 
   fp = fopen(filename, "a");
   fprintf(fp, "%d\n", value);
   fprintf(fp, "\n");
   fclose(fp);
-  return 1;
+  return;
+}
+
+void freeB(int **bd,int *size){
+  int i;
+  for(i = 0; i<size[0]; i++){
+      free(bd[i]);
+    }
+  free(bd);
+  return;
 }

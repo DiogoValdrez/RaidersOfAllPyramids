@@ -5,7 +5,8 @@
 #include <string.h>
 #include "variants.h"
 
-int** createBoard(char *filename);
-int filePrint(int value, char *filename);
+void createBoard(char *filename);
+void filePrint(int value, char *filename);
+void freeB(int **bd,int *size);
 
 #endif
