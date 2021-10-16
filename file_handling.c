@@ -145,7 +145,9 @@ void createBoard(char *filename){
 void filePrint(int value, char *filename){
   FILE *fp;
 
-  fp = fopen(filename, "a");
+  if((fp = fopen(filename, "a"))==NULL){
+    exit(0);
+  }
   fprintf(fp, "%d\n", value);
   fprintf(fp, "\n");
   fclose(fp);
