@@ -7,6 +7,39 @@ int Variant1(int *var_coord, int **bd, int *size)
 
 int Variant2_4(int *var_coord, int **bd, int *size, int piece)
 {
+    //Caso o tabuleiro seja apenas uma linha
+    if (size[0] == 1 && size[1] == 1)
+    {
+        return 0;
+    }
+    if (size[0] == 1)
+    {
+        if (var_coord[1] == 1 && bd[var_coord[0]-1][var_coord[1]] == piece)
+        {
+            return 1;
+        }else if (var_coord[1] == size[1] && bd[var_coord[0]-1][var_coord[1]-2] == piece){
+            return 1;
+        }else if (bd[var_coord[0]-1][var_coord[1]-2] == piece || bd[var_coord[0]-1][var_coord[1]] == piece){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+    //Caso o tabuleiro seja apenas uma coluna
+    if (size[1] == 1)
+    {
+        if (var_coord[0] == 1 && bd[var_coord[0]][var_coord[1]-1] == piece)
+        {
+            return 1;
+        }else if (var_coord[0] == size[1] && bd[var_coord[0]-2][var_coord[1]-1] == piece){
+            return 1;
+        }else if(bd[var_coord[0]-2][var_coord[1]-1] == piece || bd[var_coord[0]][var_coord[1]-1] == piece){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+    
     //1ª e ultima linha
     if(var_coord[0] == 1)
     {
@@ -101,6 +134,37 @@ int Variant2_4(int *var_coord, int **bd, int *size, int piece)
 
 int Variant3(int *var_coord, int **bd, int *size)
 {
+    if (size[0] == 1 && size[1] == 1)
+    {
+        return 0;
+    }
+    if (size[0] == 1)
+    {
+        if (var_coord[1] == 1 && bd[var_coord[0]-1][var_coord[1]] > 0)
+        {
+            return 1;
+        }else if (var_coord[1] == size[1] && bd[var_coord[0]-1][var_coord[1]-2] > 0){
+            return 1;
+        }else if (bd[var_coord[0]-1][var_coord[1]-2] > 0 || bd[var_coord[0]-1][var_coord[1]] > 0){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+    //Caso o tabuleiro seja apenas uma coluna
+    if (size[1] == 1)
+    {
+        if (var_coord[0] == 1 && bd[var_coord[0]][var_coord[1]-1] > 0)
+        {
+            return 1;
+        }else if (var_coord[0] == size[1] && bd[var_coord[0]-2][var_coord[1]-1] > 0){
+            return 1;
+        }else if (bd[var_coord[0]-2][var_coord[1]-1] > 0 || bd[var_coord[0]][var_coord[1]-1] >  0){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
     
     //1ª e ultima linha
     if(var_coord[0] == 1)
