@@ -14,6 +14,7 @@ void createBoard(char *filename){
   char varia[2];//variavel com a variante
   int size[2];
   char *extra;
+  int varia6E = 0;
 
   if((fp = fopen(filename, "r"))==NULL){
     exit(0);
@@ -33,6 +34,60 @@ void createBoard(char *filename){
       exit(0);
     }
 
+    //!ter atenção caso o numb esteja errado
+
+    for(i = 0; i<2; i++){
+      if(!fscanf(fp, "%d" , &(var_coord[i]))){//!make function to do this verification
+      fclose(fp);
+      exit(0);
+      }
+    }
+    if(!fscanf(fp, "%s", varia)){
+      fclose(fp);
+      exit(0);
+      }
+    if(!strcmp(varia, "A6")){
+      for(i = 0; i<2; i++){
+        if(!fscanf(fp, "%d" , &(varia6[i]))){
+          fclose(fp);
+          exit(0);
+        }
+      }
+      if (varia6[0] > size[0] || varia6[1] > size[1] || varia6[0] < 1 || varia6[1] < 1){//!por isto antes da alocação(para o A1,A2 e A3)
+        varia6E = 1;
+      }
+    }
+    if(!fscanf(fp, "%d", &numb)){
+      fclose(fp);
+      exit(0);
+    }
+
+    if (var_coord[0] > size[0] || var_coord[1] > size[1] || var_coord[0] < 1 || var_coord[1] < 1 || varia6E){
+      for(i = 0; i<numb; i++){
+        if(!fscanf(fp, "%d", &a)){
+          freeB(bd, size);
+          fclose(fp);
+          exit(0);
+        }
+        if(!fscanf(fp, "%d", &b)){
+          freeB(bd, size);
+          fclose(fp);
+          exit(0);
+        }
+        if(!fscanf(fp, "%d", &a)){
+        freeB(bd, size);
+        fclose(fp);
+        exit(0);
+      }
+      }
+      filePrint(-2, filename);
+      varia6E = 0;
+      continue;
+    }
+
+
+    //!debugging
+
     if((bd = (int **)malloc(sizeof(int*)*size[0]))==NULL){
       exit(0);
     }
@@ -51,36 +106,7 @@ void createBoard(char *filename){
       }
     }
 
-
-    //!ter atenção caso o numb esteja errado
-
-    for(i = 0; i<2; i++){
-      if(!fscanf(fp, "%d" , &(var_coord[i]))){//!make function to do this verification
-      freeB(bd, size);
-      fclose(fp);
-      exit(0);
-      }
-    }
-    if(!fscanf(fp, "%s", varia)){
-      freeB(bd, size);
-      fclose(fp);
-      exit(0);
-      }
-    if(!strcmp(varia, "A6")){
-      for(i = 0; i<2; i++){
-        if(!fscanf(fp, "%d" , &(varia6[i]))){
-          freeB(bd, size);
-          fclose(fp);
-          exit(0);
-        }
-      }
-    }
     
-    if(!fscanf(fp, "%d", &numb)){
-      freeB(bd, size);
-      fclose(fp);
-      exit(0);
-    }
     for(i = 0; i<numb; i++){
       
       if(!fscanf(fp, "%d", &a)){

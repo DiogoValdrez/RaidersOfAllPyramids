@@ -2,19 +2,11 @@
 
 int Variant1(int *var_coord, int **bd, int *size)
 {
-    if (var_coord[0] > size[0] || var_coord[1] > size[1] || var_coord[0] < 1 || var_coord[1] < 1)
-    {
-        return -2;
-    }
     return bd[var_coord[0] - 1][var_coord[1] - 1];
 }
 
 int Variant2_4(int *var_coord, int **bd, int *size, int piece)
 {
-    if (var_coord[0] > size[0] || var_coord[1] > size[1] || var_coord[0] < 1 || var_coord[1] < 1)
-    {
-        return -2;
-    }
     //1ª e ultima linha
     if(var_coord[0] == 1)
     {
@@ -109,10 +101,7 @@ int Variant2_4(int *var_coord, int **bd, int *size, int piece)
 
 int Variant3(int *var_coord, int **bd, int *size)
 {
-    if (var_coord[0] > size[0] || var_coord[1] > size[1] || var_coord[0] < 1 || var_coord[1] < 1)
-    {
-        return -2;
-    }
+    
     //1ª e ultima linha
     if(var_coord[0] == 1)
     {
@@ -203,10 +192,6 @@ int Variant3(int *var_coord, int **bd, int *size)
 
 int Variant5(int *var_coord, int **bd, int *size)
 {
-    if (var_coord[0] > size[0] || var_coord[1] > size[1] || var_coord[0] < 1 || var_coord[1] < 1)
-    {
-        return -2;
-    }
     if (bd[var_coord[0]-1][var_coord[1]-1] < 1)
     {
         return -1;
@@ -266,10 +251,6 @@ int search(int x, int y, int **bd, int *size, int *obj){
 }
 
 int Variant6(int *var_coord, int **bd, int *size, int *obj){
-    if (var_coord[0] > size[0] || var_coord[1] > size[1] || var_coord[0] < 1 || var_coord[1] < 1 ||
-        obj[0] > size[0] || obj[1] > size[1] || obj[0] < 1 || obj[1] < 1){
-        return -2;
-    }
     if(bd[var_coord[0]-1][var_coord[1]-1] != 0 || bd[obj[0]-1][obj[1]-1] != 0){
         return 0;
     }
