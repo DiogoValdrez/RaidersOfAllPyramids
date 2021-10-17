@@ -29,7 +29,7 @@ int Variant2_4(int *var_coord, int **bd, int *size, int piece)
             }
         }else
         {
-            if(bd[var_coord[0]-1][var_coord[1]-2] == piece || bd[var_coord[0]][var_coord[1]] == piece || bd[var_coord[0]-1][var_coord[1]] == piece)
+            if(bd[var_coord[0]-1][var_coord[1]-2] == piece || bd[var_coord[0]][var_coord[1]] == piece || bd[var_coord[0]-1][var_coord[1]-1] == piece)
             {
                 return 1;
             }else{
@@ -210,7 +210,7 @@ int Variant5(int *var_coord, int **bd, int *size)
         }else{
             return 0;
         }
-    }else if (var_coord[1] == 1 || var_coord[1] == size[0])
+    }else if (var_coord[1] == 1 || var_coord[1] == size[1])
     {
         if (bd[var_coord[0]-2][var_coord[1]-1] == 0 && bd[var_coord[0]][var_coord[1]-1] == 0)
         {
