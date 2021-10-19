@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <getopt.h>
-#include "file_handling.h"
+#include "board.h"
 
 #define LISTA_OPCOES "s"
 
@@ -30,7 +30,4 @@ int main(int argc, char *argv[])
   exit(0);
 }
 
-//!falta refatorizar
-//!tentar tirar includes a mais
-//!comentar
 
