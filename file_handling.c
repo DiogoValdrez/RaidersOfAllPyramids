@@ -23,61 +23,29 @@ void createBoard(char *filename){
   extra = &filename[strlen(filename)-4];
   *extra = '\0';
   strcat(filename, ".sol1");
-
-  /*if(!fscanf(fp, "%d" , size)){
-    fclose(fp);
-    exit(0);
-  }*/
   read(fp, 'd', size, bd, size, 0);
   do{
-    if(!fscanf(fp, "%d" , &(size[1]))){
-      fclose(fp);
-      exit(0);
-    }
+    read(fp, 'd', &(size[1]), bd, size, 0);
 
     for(i = 0; i<2; i++){
-      if(!fscanf(fp, "%d" , &(var_coord[i]))){//!make function to do this verification
-      fclose(fp);
-      exit(0);
-      }
+      read(fp, 'd', &(var_coord[i]), bd, size, 0);
     }
-    if(!fscanf(fp, "%s", varia)){
-      fclose(fp);
-      exit(0);
-      }
+    read(fp, 's', varia, bd, size, 0);
     if(!strcmp(varia, "A6")){
       for(i = 0; i<2; i++){
-        if(!fscanf(fp, "%d" , &(varia6[i]))){
-          fclose(fp);
-          exit(0);
-        }
+        read(fp, 'd', &(varia6[i]), bd, size, 0);
       }
       if (varia6[0] > size[0] || varia6[1] > size[1] || varia6[0] < 1 || varia6[1] < 1){//!por isto antes da alocação(para o A1,A2 e A3)
         varia6E = 1;
       }
     }
-    if(!fscanf(fp, "%d", &numb)){
-      fclose(fp);
-      exit(0);
-    }
+    read(fp, 'd', &numb, bd, size, 0);
 
     if (var_coord[0] > size[0] || var_coord[1] > size[1] || var_coord[0] < 1 || var_coord[1] < 1 || varia6E){
       for(i = 0; i<numb; i++){
-        if(!fscanf(fp, "%d", &a)){
-          freeB(bd, size);
-          fclose(fp);
-          exit(0);
-        }
-        if(!fscanf(fp, "%d", &b)){
-          freeB(bd, size);
-          fclose(fp);
-          exit(0);
-        }
-        if(!fscanf(fp, "%d", &a)){
-          freeB(bd, size);
-          fclose(fp);
-          exit(0);
-        }
+        read(fp, 'd', &a, bd, size, 0);
+        read(fp, 'd', &b, bd, size, 0);
+        read(fp, 'd', &a, bd, size, 0);
       }
       filePrint(-2, filename);
       varia6E = 0;
@@ -104,35 +72,22 @@ void createBoard(char *filename){
 
     
     for(i = 0; i<numb; i++){
-      
-      if(!fscanf(fp, "%d", &a)){
-        freeB(bd, size);
-        fclose(fp);
-        exit(0);
-      }
+      read(fp, 'd', &a, bd, size, 1);
       /*if(a<0||a>size[0]){
         freeB(bd, size);
         fclose(fp);
         exit(0);
       }*/
-      if(!fscanf(fp, "%d", &b)){
-        freeB(bd, size);
-        fclose(fp);
-        exit(0);
-      }
+      read(fp, 'd', &b, bd, size, 1);
       /*if(b<0||b>size[1]){
         freeB(bd, size);
         fclose(fp);
         exit(0);
       } */   
-      if(!fscanf(fp, "%d", &(bd[a-1][b-1]))){
-        freeB(bd, size);
-        fclose(fp);
-        exit(0);
-      }
+      read(fp, 'd', &(bd[a-1][b-1]), bd, size, 1);
     }
 
-    //!depois vamos trocar isto para um ficheiro á parte, mas por enquanto fica aqui
+    //!depois vamos trocar isto para um ficheiro á parte ou função, mas por enquanto fica aqui
     if (!strcmp(varia, "A1")){
       filePrint(Variant1(var_coord, bd, size), filename);
     }else if (!strcmp(varia, "A2")){
@@ -205,3 +160,6 @@ void read(FILE *fp, char type, void* addr, int **bd, int *size, int free){
     }
   }
 }
+
+//!funçaõ get file
+//!assim podemos por o file handling todo num ficheiro e o while loop noutro(chamado datastruct ou assim)
