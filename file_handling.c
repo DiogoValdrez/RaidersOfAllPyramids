@@ -2,7 +2,7 @@
 #include "variants.h"
 
 void createBoard(char *filename){
-  int **bd;
+  int **bd = NULL;
   FILE *fp;
   int i;
   int j;
@@ -22,19 +22,18 @@ void createBoard(char *filename){
 
   extra = &filename[strlen(filename)-4];
   *extra = '\0';
-  strcat(filename, ".sol1");//!no retrun value for error
+  strcat(filename, ".sol1");
 
-  if(!fscanf(fp, "%d" , size)){
+  /*if(!fscanf(fp, "%d" , size)){
     fclose(fp);
     exit(0);
-  }
+  }*/
+  read(fp, 'd', size, bd, size, 0);
   do{
     if(!fscanf(fp, "%d" , &(size[1]))){
       fclose(fp);
       exit(0);
     }
-
-    //!ter atenção caso o numb esteja errado
 
     for(i = 0; i<2; i++){
       if(!fscanf(fp, "%d" , &(var_coord[i]))){//!make function to do this verification
@@ -75,18 +74,15 @@ void createBoard(char *filename){
           exit(0);
         }
         if(!fscanf(fp, "%d", &a)){
-        freeB(bd, size);
-        fclose(fp);
-        exit(0);
-      }
+          freeB(bd, size);
+          fclose(fp);
+          exit(0);
+        }
       }
       filePrint(-2, filename);
       varia6E = 0;
       continue;
     }
-
-
-    //!debugging
 
     if((bd = (int **)malloc(sizeof(int*)*size[0]))==NULL){
       exit(0);
@@ -151,7 +147,7 @@ void createBoard(char *filename){
       filePrint(Variant6(var_coord,bd,size,varia6), filename);
     }
 
-  
+    //Print for testing
     /*
     for(i = 0; i<size[0]; i++){
       for (j = 0; j<size[1]; j++){
@@ -180,11 +176,32 @@ void filePrint(int value, char *filename){
   return;
 }
 
-void freeB(int **bd,int *size){
+void freeB(int **bd, int *size){
   int i;
   for(i = 0; i<size[0]; i++){
       free(bd[i]);
-    }
+  }
   free(bd);
   return;
+}
+
+//por no .h
+void read(FILE *fp, char type, void* addr, int **bd, int *size, int free){
+  if(type == 'd'){
+    if(!fscanf(fp, "%d", (int*)addr)){
+        fclose(fp);
+        if(free){
+          freeB(bd, size);
+        }
+        exit(0);       
+    }
+  }else if(type == 's'){
+    if(!fscanf(fp, "%s",(char*)addr)){
+      fclose(fp);
+      if(free){
+        freeB(bd, size);
+      }
+      exit(0);
+    }
+  }
 }

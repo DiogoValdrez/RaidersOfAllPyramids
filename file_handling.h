@@ -7,6 +7,7 @@
 
 void createBoard(char *filename);
 void filePrint(int value, char *filename);
-void freeB(int **bd,int *size);
+void freeB(int **bd, int *size);
+void read(FILE *fp, char type, void* addr, int **bd, int *size, int free);
 
 #endif

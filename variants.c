@@ -1,19 +1,15 @@
 #include "variants.h"
 
-int Variant1(int *var_coord, int **bd, int *size)
-{
+int Variant1(int *var_coord, int **bd, int *size){
     return bd[var_coord[0] - 1][var_coord[1] - 1];
 }
 
-int Variant2_4(int *var_coord, int **bd, int *size, int piece)
-{
+int Variant2_4(int *var_coord, int **bd, int *size, int piece){
     //Caso o tabuleiro seja apenas uma linha
-    if (size[0] == 1 && size[1] == 1)
-    {
+    if (size[0] == 1 && size[1] == 1){
         return 0;
     }
-    if (size[0] == 1)
-    {
+    if (size[0] == 1){
         if (var_coord[1] == 1 && bd[var_coord[0]-1][var_coord[1]] == piece)
         {
             return 1;
@@ -26,10 +22,8 @@ int Variant2_4(int *var_coord, int **bd, int *size, int piece)
         }
     }
     //Caso o tabuleiro seja apenas uma coluna
-    if (size[1] == 1)
-    {
-        if (var_coord[0] == 1 && bd[var_coord[0]][var_coord[1]-1] == piece)
-        {
+    if (size[1] == 1){
+        if (var_coord[0] == 1 && bd[var_coord[0]][var_coord[1]-1] == piece){
             return 1;
         }else if (var_coord[0] == size[1] && bd[var_coord[0]-2][var_coord[1]-1] == piece){
             return 1;
@@ -41,55 +35,42 @@ int Variant2_4(int *var_coord, int **bd, int *size, int piece)
     }
     
     //1ª e ultima linha
-    if(var_coord[0] == 1)
-    {
-        if (var_coord[1] == 1)
-        {
-            if(bd[var_coord[0]][var_coord[1]-1] == piece || bd[var_coord[0]-1][var_coord[1]] == piece)
-            {
+    if(var_coord[0] == 1){
+        if (var_coord[1] == 1){
+            if(bd[var_coord[0]][var_coord[1]-1] == piece || bd[var_coord[0]-1][var_coord[1]] == piece){
                 return 1;
             }else{
                 return 0;
             }
 
-        }else if (var_coord[1] == size[1])
-        {
-            if(bd[var_coord[0]-1][var_coord[1]-2] == piece || bd[var_coord[0]][var_coord[1]-1] == piece)
-            {
-                return 1;
-            }else{
-                return 0;
-            }
-        }else
-        {
-            if(bd[var_coord[0]-1][var_coord[1]-2] == piece || bd[var_coord[0]][var_coord[1]] == piece || bd[var_coord[0]-1][var_coord[1]-1] == piece)
-            {
-                return 1;
-            }else{
-                return 0;
-            }
-        }
-    }else if(var_coord[0] == size[0])
-    {
-        if (var_coord[1] == 1)
-        {
-            if(bd[var_coord[0]-2][var_coord[1]-1] == piece || bd[var_coord[0]-1][var_coord[1]] == piece)
-            {
-                return 1;
-            }else{
-                return 0;
-            }
-        }else if(var_coord[1] == size[1])
-        {
-            if(bd[var_coord[0]-1][var_coord[1]-2] == piece || bd[var_coord[0]-2][var_coord[1]-1] == piece)
-            {
+        }else if (var_coord[1] == size[1]){
+            if(bd[var_coord[0]-1][var_coord[1]-2] == piece || bd[var_coord[0]][var_coord[1]-1] == piece){
                 return 1;
             }else{
                 return 0;
             }
         }else{
-            if(bd[var_coord[0]-1][var_coord[1]-2] == piece || bd[var_coord[0]-2][var_coord[1]-1] == piece || bd[var_coord[0]-1][var_coord[1]] == piece)
-            {
+            if(bd[var_coord[0]-1][var_coord[1]-2] == piece || bd[var_coord[0]][var_coord[1]] == piece || bd[var_coord[0]-1][var_coord[1]-1] == piece){
+                return 1;
+            }else{
+                return 0;
+            }
+        }
+    }else if(var_coord[0] == size[0]){
+        if (var_coord[1] == 1){
+            if(bd[var_coord[0]-2][var_coord[1]-1] == piece || bd[var_coord[0]-1][var_coord[1]] == piece){
+                return 1;
+            }else{
+                return 0;
+            }
+        }else if(var_coord[1] == size[1]){
+            if(bd[var_coord[0]-1][var_coord[1]-2] == piece || bd[var_coord[0]-2][var_coord[1]-1] == piece){
+                return 1;
+            }else{
+                return 0;
+            }
+        }else{
+            if(bd[var_coord[0]-1][var_coord[1]-2] == piece || bd[var_coord[0]-2][var_coord[1]-1] == piece || bd[var_coord[0]-1][var_coord[1]] == piece){
                 return 1;
             }else{
                 return 0;
@@ -100,8 +81,7 @@ int Variant2_4(int *var_coord, int **bd, int *size, int piece)
 //1ª e ultima coluna sem os cantos porque a excessão deles ja está imposta em cima
     if(var_coord[1] == 1)
     {
-        if(bd[var_coord[0]-2][var_coord[1]-1] == piece || bd[var_coord[0]-1][var_coord[1]] == piece || bd[var_coord[0]][var_coord[1]-1] == piece)
-        {
+        if(bd[var_coord[0]-2][var_coord[1]-1] == piece || bd[var_coord[0]-1][var_coord[1]] == piece || bd[var_coord[0]][var_coord[1]-1] == piece){
             return 1;
         }else{
             return 0;
@@ -109,8 +89,7 @@ int Variant2_4(int *var_coord, int **bd, int *size, int piece)
     
     }else if(var_coord[1] == size[1])
     {
-        if(bd[var_coord[0]-2][var_coord[1]-1] == piece || bd[var_coord[0]-1][var_coord[1]-2] == piece || bd[var_coord[0]][var_coord[1]-1] == piece)
-        {
+        if(bd[var_coord[0]-2][var_coord[1]-1] == piece || bd[var_coord[0]-1][var_coord[1]-2] == piece || bd[var_coord[0]][var_coord[1]-1] == piece){
             return 1;
         }else{
             return 0;
@@ -119,8 +98,7 @@ int Variant2_4(int *var_coord, int **bd, int *size, int piece)
 
     //Células que não representam qualquer excessão
     if (bd[var_coord[0]-2][var_coord[1]-1] == piece || bd[var_coord[0]-1][var_coord[1]] == piece ||
-        bd[var_coord[0]][var_coord[1]-1] == piece || bd[var_coord[0]-1][var_coord[1]-2] == piece)
-    {
+        bd[var_coord[0]][var_coord[1]-1] == piece || bd[var_coord[0]-1][var_coord[1]-2] == piece){
         return 1;
     }else{
         return 0;
@@ -134,14 +112,11 @@ int Variant2_4(int *var_coord, int **bd, int *size, int piece)
 
 int Variant3(int *var_coord, int **bd, int *size)
 {
-    if (size[0] == 1 && size[1] == 1)
-    {
+    if (size[0] == 1 && size[1] == 1){
         return 0;
     }
-    if (size[0] == 1)
-    {
-        if (var_coord[1] == 1 && bd[var_coord[0]-1][var_coord[1]] > 0)
-        {
+    if (size[0] == 1){
+        if (var_coord[1] == 1 && bd[var_coord[0]-1][var_coord[1]] > 0){
             return 1;
         }else if (var_coord[1] == size[1] && bd[var_coord[0]-1][var_coord[1]-2] > 0){
             return 1;
@@ -152,10 +127,8 @@ int Variant3(int *var_coord, int **bd, int *size)
         }
     }
     //Caso o tabuleiro seja apenas uma coluna
-    if (size[1] == 1)
-    {
-        if (var_coord[0] == 1 && bd[var_coord[0]][var_coord[1]-1] > 0)
-        {
+    if (size[1] == 1){
+        if (var_coord[0] == 1 && bd[var_coord[0]][var_coord[1]-1] > 0){
             return 1;
         }else if (var_coord[0] == size[1] && bd[var_coord[0]-2][var_coord[1]-1] > 0){
             return 1;
@@ -167,55 +140,42 @@ int Variant3(int *var_coord, int **bd, int *size)
     }
     
     //1ª e ultima linha
-    if(var_coord[0] == 1)
-    {
-        if (var_coord[1] == 1)
-        {
-            if(bd[var_coord[0]][var_coord[1]-1] > 0 || bd[var_coord[0]-1][var_coord[1]] > 0)
-            {
+    if(var_coord[0] == 1){
+        if (var_coord[1] == 1){
+            if(bd[var_coord[0]][var_coord[1]-1] > 0 || bd[var_coord[0]-1][var_coord[1]] > 0){
                 return 1;
             }else{
                 return 0;
             }
 
-        }else if (var_coord[1] == size[1])
-        {
-            if(bd[var_coord[0]-1][var_coord[1]-2] > 0 || bd[var_coord[0]][var_coord[1]-1] > 0)
-            {
-                return 1;
-            }else{
-                return 0;
-            }
-        }else
-        {
-            if(bd[var_coord[0]-1][var_coord[1]-2] > 0 || bd[var_coord[0]][var_coord[1]-1] > 0 || bd[var_coord[0]-1][var_coord[1]] > 0)
-            {
-                return 1;
-            }else{
-                return 0;
-            }
-        }
-    }else if(var_coord[0] == size[0])
-    {
-        if (var_coord[1] == 1)
-        {
-            if(bd[var_coord[0]-2][var_coord[1]-1] > 0 || bd[var_coord[0]-1][var_coord[1]] > 0)
-            {
-                return 1;
-            }else{
-                return 0;
-            }
-        }else if(var_coord[1] == size[1])
-        {
-            if(bd[var_coord[0]-1][var_coord[1]-2] > 0 || bd[var_coord[0]-2][var_coord[1]-1] > 0)
-            {
+        }else if (var_coord[1] == size[1]){
+            if(bd[var_coord[0]-1][var_coord[1]-2] > 0 || bd[var_coord[0]][var_coord[1]-1] > 0){
                 return 1;
             }else{
                 return 0;
             }
         }else{
-            if(bd[var_coord[0]-1][var_coord[1]-2] > 0 || bd[var_coord[0]-2][var_coord[1]-1] > 0 || bd[var_coord[0]-1][var_coord[1]] > 0)
-            {
+            if(bd[var_coord[0]-1][var_coord[1]-2] > 0 || bd[var_coord[0]][var_coord[1]-1] > 0 || bd[var_coord[0]-1][var_coord[1]] > 0){
+                return 1;
+            }else{
+                return 0;
+            }
+        }
+    }else if(var_coord[0] == size[0]){
+        if (var_coord[1] == 1){
+            if(bd[var_coord[0]-2][var_coord[1]-1] > 0 || bd[var_coord[0]-1][var_coord[1]] > 0){
+                return 1;
+            }else{
+                return 0;
+            }
+        }else if(var_coord[1] == size[1]){
+            if(bd[var_coord[0]-1][var_coord[1]-2] > 0 || bd[var_coord[0]-2][var_coord[1]-1] > 0){
+                return 1;
+            }else{
+                return 0;
+            }
+        }else{
+            if(bd[var_coord[0]-1][var_coord[1]-2] > 0 || bd[var_coord[0]-2][var_coord[1]-1] > 0 || bd[var_coord[0]-1][var_coord[1]] > 0){
                 return 1;
             }else{
                 return 0;
@@ -226,8 +186,7 @@ int Variant3(int *var_coord, int **bd, int *size)
 //1ª e ultima coluna sem os cantos porque a excessão deles ja está imposta em cima
     if(var_coord[1] == 1)
     {
-        if(bd[var_coord[0]-2][var_coord[1]-1] > 0 || bd[var_coord[0]-1][var_coord[1]] > 0 || bd[var_coord[0]][var_coord[1]-1] > 0)
-        {
+        if(bd[var_coord[0]-2][var_coord[1]-1] > 0 || bd[var_coord[0]-1][var_coord[1]] > 0 || bd[var_coord[0]][var_coord[1]-1] > 0){
             return 1;
         }else{
             return 0;
@@ -235,8 +194,7 @@ int Variant3(int *var_coord, int **bd, int *size)
     
     }else if(var_coord[1] == size[1])
     {
-        if(bd[var_coord[0]-2][var_coord[1]-1] > 0 || bd[var_coord[0]-1][var_coord[1]-2] > 0 || bd[var_coord[0]][var_coord[1]-1] > 0)
-        {
+        if(bd[var_coord[0]-2][var_coord[1]-1] > 0 || bd[var_coord[0]-1][var_coord[1]-2] > 0 || bd[var_coord[0]][var_coord[1]-1] > 0){
             return 1;
         }else{
             return 0;
@@ -245,8 +203,7 @@ int Variant3(int *var_coord, int **bd, int *size)
 
     //Células que não representam qualquer excessão
     if (bd[var_coord[0]-2][var_coord[1]-1] > 0 || bd[var_coord[0]-1][var_coord[1]] > 0 ||
-        bd[var_coord[0]][var_coord[1]-1] > 0 || bd[var_coord[0]-1][var_coord[1]-2] > 0)
-    {
+        bd[var_coord[0]][var_coord[1]-1] > 0 || bd[var_coord[0]-1][var_coord[1]-2] > 0){
         return 1;
     }else{
         return 0;
@@ -254,39 +211,30 @@ int Variant3(int *var_coord, int **bd, int *size)
 }
 
 
-int Variant5(int *var_coord, int **bd, int *size)
-{
-    if (bd[var_coord[0]-1][var_coord[1]-1] < 1)
-    {
+int Variant5(int *var_coord, int **bd, int *size){
+    if (bd[var_coord[0]-1][var_coord[1]-1] < 1){
         return -1;
     }
     if ((var_coord[0] == 1 && var_coord[1] == 1) || (var_coord[0] == 1 && var_coord[1] == size[1]) ||
-        (var_coord[0] == size[0] && var_coord[1] == 1) || (var_coord[0] == size[0] && var_coord[1] == size[1]))
-    {
+        (var_coord[0] == size[0] && var_coord[1] == 1) || (var_coord[0] == size[0] && var_coord[1] == size[1])){
         return 0;
     }
 
-    if (var_coord[0] == 1 || var_coord[0] == size[0])
-    {
-        if (bd[var_coord[0]-1][var_coord[1]-2] == 0 && bd[var_coord[0]-1][var_coord[1]] == 0)
-        {
+    if (var_coord[0] == 1 || var_coord[0] == size[0]){
+        if (bd[var_coord[0]-1][var_coord[1]-2] == 0 && bd[var_coord[0]-1][var_coord[1]] == 0){
             return 1;
         }else{
             return 0;
         }
-    }else if (var_coord[1] == 1 || var_coord[1] == size[1])
-    {
-        if (bd[var_coord[0]-2][var_coord[1]-1] == 0 && bd[var_coord[0]][var_coord[1]-1] == 0)
-        {
+    }else if (var_coord[1] == 1 || var_coord[1] == size[1]){
+        if (bd[var_coord[0]-2][var_coord[1]-1] == 0 && bd[var_coord[0]][var_coord[1]-1] == 0){
             return 1;
         }else{
             return 0;
         }
-    }else
-    {
+    }else{
         if ((bd[var_coord[0]-1][var_coord[1]-2] == 0 && bd[var_coord[0]-1][var_coord[1]] == 0)||
-            (bd[var_coord[0]-2][var_coord[1]-1] == 0 && bd[var_coord[0]][var_coord[1]-1] == 0))
-        {
+            (bd[var_coord[0]-2][var_coord[1]-1] == 0 && bd[var_coord[0]][var_coord[1]-1] == 0)){
             return 1;
         }else{
             return 0;

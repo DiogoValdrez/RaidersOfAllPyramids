@@ -14,8 +14,7 @@ int main(int argc, char *argv[])
   char *last4i;
 
   opt = getopt(argc, argv,"s");
-  if (opt != -1 && opt == 's')
-  {
+  if (opt != -1 && opt == 's'){
       FirstSubmission = 1;
   }
 
@@ -25,7 +24,7 @@ int main(int argc, char *argv[])
     if(strncmp(last4i, ".in1", 4) == 0 && FirstSubmission == 1){
     createBoard(file_read);
     }else{
-      exit(0);//!ver se é preciso algum print
+      exit(0);
     }
   }
   exit(0);
@@ -33,15 +32,5 @@ int main(int argc, char *argv[])
 
 //!falta refatorizar
 //!tentar tirar includes a mais
-
-//!verificar se não temos argumentos a mais , returns não usados(fscanf, funções, etc)
-//!Cena de tabela demasiado grande
-
-//!ver indice de plagio
 //!comentar
-
-//!ler enunciado bem!!
-
-//!refacoring
-//!2 linhas brancas no fim??
 
