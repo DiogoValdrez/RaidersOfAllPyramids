@@ -1,5 +1,18 @@
 #include "board.h"
-
+/*
+ *  Function:
+ *    createBoard
+ *
+ *  Description:
+ *    Main loop of the program for the first submission
+ *
+ *  Arguments:
+ *    Pointer to an array that contains the name of the file;
+ *
+ *  Return value:
+ *    Void;
+ *          
+ */
 void createBoard(char *filename){
   int **bd = NULL;
   FILE *fp = NULL;
@@ -9,13 +22,12 @@ void createBoard(char *filename){
   int numb;
   int a;
   int b;
-  int varia6[] = {-1, -1};
-  int var_coord[2];//variavel para coordenadas da variane
-  char varia[2];//variavel com a variante
+  int varia6[] = {-1, -1};//array containing the coordenates of the second cell for the variant A6
+  int var_coord[2];//array containing the coordenates of the cell
+  char varia[2];//variable containing the variant value
   int size[2];
   int varia6E = 0;
 
-  
   fp = getFile(fp,filename,extra);
   read(fp, 'd', &(size[0]), bd, size, 0);
   do{
@@ -29,12 +41,14 @@ void createBoard(char *filename){
       for(i = 0; i<2; i++){
         read(fp, 'd', &(varia6[i]), bd, size, 0);
       }
+      //Checks if the second cell for variant A6 is out of the board
       if (varia6[0] > size[0] || varia6[1] > size[1] || varia6[0] < 1 || varia6[1] < 1){
         varia6E = 1;
       }
     }
     read(fp, 'd', &numb, bd, size, 0);
 
+    //Checks if the cell is out of the board
     if (var_coord[0] > size[0] || var_coord[1] > size[1] || var_coord[0] < 1 || var_coord[1] < 1 || varia6E){
       for(i = 0; i<numb; i++){
         read(fp, 'd', &a, bd, size, 0);
@@ -82,7 +96,7 @@ void createBoard(char *filename){
 
     decideVar(filename, varia, var_coord, bd, size, varia6);
 
-    //Print for testing
+    //Print the board for testing
     /*
     for(i = 0; i<size[0]; i++){
       for (j = 0; j<size[1]; j++){
@@ -100,6 +114,25 @@ void createBoard(char *filename){
   return;
 }
 
+/*
+ *  Function:
+ *    decideVar
+ *
+ *  Description:
+ *    Checks the variant value and calls the respective variant function;
+ *
+ *  Arguments:
+ *    Pointer to an array that contains the name of the file;
+ *    Pointer to an array that contains the Variant;
+ *    Pointer to an array that contains the coordenates of the cell;
+ *    Double pointer to the board;
+ *    Pointer to an array that contains the size of the board;
+ *    Pointer to an array that contains the coordenates for the second cell in case of Variant A6;
+ *
+ *  Return value:
+ *    Void;
+ *          
+ */
 void decideVar(char* filename, char varia[2], int var_coord[2], int** bd, int size[2], int varia6[2]){
     if (!strcmp(varia, "A1")){
       filePrint(Variant1(var_coord, bd, size), filename);

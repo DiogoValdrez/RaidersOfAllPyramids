@@ -6,6 +6,14 @@
 
 #define LISTA_OPCOES "s"
 
+/*
+ * Autores: Diogo Valdrez 99914
+ *          Pedro Raposo 100059
+ *
+ * Descrição:  Projeto Raiders of all Pyramids
+ *          
+ */
+
 int main(int argc, char *argv[])
 {
   int opt;
