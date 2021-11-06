@@ -31,6 +31,8 @@ int main(int argc, char *argv[])
     last4i = &file_read[strlen(file_read)-4];
     if(strncmp(last4i, ".in1", 4) == 0 && FirstSubmission == 1){
     createBoard(file_read);
+    }else if(strncmp(last4i, ".in", 3) == 0 && FirstSubmission == 0){
+    //createBoard(file_read);
     }else{
       exit(0);
     }
