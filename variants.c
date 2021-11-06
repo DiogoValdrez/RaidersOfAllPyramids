@@ -354,20 +354,20 @@ int Variant5(int *var_coord, int **bd, int *size){
  *    if one of the cells isnt white the value of the variant answer is -2, but that check is made before the function is called;
  *          
  */
-int search(int x, int y, int **bd, int *size, int *obj){
-    if(x==obj[0]-1 && y==obj[1]-1){
+int search(int x, int y, int **bd, int *size, int *obj, int flag, int type){
+    if(type && x==obj[0]-1 && y==obj[1]-1){
         return 1;
     }else if(bd[x][y]!=0){//Wall or already visited cell
         return 0;
     }
     //new search
 
-    bd[x][y] = -2;
+    bd[x][y] = flag;
 
-    if((x<size[0]-1 && search(x+1,y,bd,size,obj))||
-       (x>0 && search(x-1,y,bd,size,obj))||
-       (y<size[1]-1 && search(x,y+1,bd,size,obj))||
-       (y>0 && search(x,y-1,bd,size,obj))){
+    if((x<size[0]-1 && search(x+1,y,bd,size,obj,flag,type))||
+       (x>0 && search(x-1,y,bd,size,obj,flag,type))||
+       (y<size[1]-1 && search(x,y+1,bd,size,obj,flag,type))||
+       (y>0 && search(x,y-1,bd,size,obj,flag,type))){
            return 1;
        }
     return 0;
@@ -398,9 +398,9 @@ int search(int x, int y, int **bd, int *size, int *obj){
  *          
  */
 
-int Variant6(int *var_coord, int **bd, int *size, int *obj){
+int Variant6(int *var_coord, int **bd, int *size, int *obj, int flag, int type){
     if(bd[var_coord[0]-1][var_coord[1]-1] != 0 || bd[obj[0]-1][obj[1]-1] != 0){
         return 0;
     }
-    return search(var_coord[0]-1,var_coord[1]-1,bd,size,obj);
+    return search(var_coord[0]-1,var_coord[1]-1,bd,size,obj,flag, type);
 }

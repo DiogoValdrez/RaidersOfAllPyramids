@@ -16,13 +16,20 @@
  *    Pointer to the file;
  *          
  */
-FILE* getFile(FILE *fp, char* filename, char *extra){
+FILE* getFile(FILE *fp, char* filename, char *extra, int type){
   if((fp = fopen(filename, "r"))==NULL){
     exit(0);
   }
-  extra = &filename[strlen(filename)-4];
-  *extra = '\0';
-  strcat(filename, ".sol1");
+  if(type){
+    extra = &filename[strlen(filename)-4];
+    *extra = '\0';
+    strcat(filename, ".sol1");
+  }else{
+    extra = &filename[strlen(filename)-3];
+    *extra = '\0';
+    strcat(filename, ".sol");
+  }
+  
   return fp;
 }
 /*

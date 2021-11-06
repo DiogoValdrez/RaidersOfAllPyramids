@@ -8,6 +8,6 @@
 void filePrint(int value, char *filename);
 void freeB(int **bd, int *size);
 void read(FILE *fp, char type, void* addr, int **bd, int *size, int free);
-FILE* getFile(FILE *fp, char* filename, char *extra);
+FILE* getFile(FILE *fp, char* filename, char *extra, int type);
 
 #endif

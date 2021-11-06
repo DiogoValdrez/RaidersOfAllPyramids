@@ -13,7 +13,7 @@
  *    Void;
  *          
  */
-void createBoard(char *filename){
+void createBoard(char *filename, int type){
   int **bd = NULL;
   FILE *fp = NULL;
   char *extra = NULL;
@@ -28,7 +28,7 @@ void createBoard(char *filename){
   int size[2];
   int varia6E = 0;
 
-  fp = getFile(fp,filename,extra);
+  fp = getFile(fp,filename,extra,type);
   read(fp, 'd', &(size[0]), bd, size, 0);
   do{
     read(fp, 'd', &(size[1]), bd, size, 0);
@@ -36,14 +36,16 @@ void createBoard(char *filename){
     for(i = 0; i<2; i++){
       read(fp, 'd', &(var_coord[i]), bd, size, 0);
     }
-    read(fp, 's', varia, bd, size, 0);
-    if(!strcmp(varia, "A6")){
-      for(i = 0; i<2; i++){
-        read(fp, 'd', &(varia6[i]), bd, size, 0);
-      }
-      //Checks if the second cell for variant A6 is out of the board
-      if (varia6[0] > size[0] || varia6[1] > size[1] || varia6[0] < 1 || varia6[1] < 1){
-        varia6E = 1;
+    if(type){//Checks what submission we are in
+      read(fp, 's', varia, bd, size, 0);
+      if(!strcmp(varia, "A6")){
+        for(i = 0; i<2; i++){
+          read(fp, 'd', &(varia6[i]), bd, size, 0);
+        }
+        //Checks if the second cell for variant A6 is out of the board
+        if (varia6[0] > size[0] || varia6[1] > size[1] || varia6[0] < 1 || varia6[1] < 1){
+          varia6E = 1;
+        }
       }
     }
     read(fp, 'd', &numb, bd, size, 0);
@@ -93,11 +95,60 @@ void createBoard(char *filename){
       } */   
       read(fp, 'd', &(bd[a-1][b-1]), bd, size, 1);
     }
+    if(type){
+      decideVar(filename, varia, var_coord, bd, size, varia6, type);
+    }else{
+      printf("Second submission\n");
+      printf("make room(s) for you, if you know what I mean ¬‿¬\n");
+      //ver se é realmente necessário isto da variante 5
+      int xy[2];
+      int found = 0;
+      /*for(i = 1; i<=size[0]; i++){
+        for(j = 1; j<=size[1]; j++){
+          xy[0] = i;
+          xy[1] = j;
+          if((Variant5(xy,bd,size)) == 0){
+            bd[i-1][j-1] = -1;
+          }
+        }
+      }*/
+      
+      int x = -1;
+      for(i = 1; i<=size[0]; i++){
+        for(j = 1; j<=size[1]; j++){
+          xy[0] = i;
+          xy[1] = j;
+          if(bd[i-1][j-1] == 0){
+            x--;
+            Variant6(xy,bd,size,var_coord,x,type);
+          }
+        }
+      }
+      //check if the beguining in a room(if not impossible)
+      //talvez este check possa ser feito mais cedo
+      if(bd[0][0] == bd[var_coord[0]-1][var_coord[1]-1]){
+        int found = 1;
+        //fazer o return a dizer que estão na mesma sala
+      }
 
-    decideVar(filename, varia, var_coord, bd, size, varia6);
-
+      //! tens aqui o inicio do loop poso
+      //! basicamente neste momento as salas estão feitas, so tens de correr o loop
+      //! há um ficheiro chamado testing.in para veres isto a funcionar
+      if(!found){
+        for(i = 1; i<=size[0]; i++){
+          for(j = 1; j<=size[1]; j++){
+            if(bd[i-1][j-1] > 0){
+              //check both sides
+              //se forem diferentes e o valor for menor que o q esta no grafo trocar
+            }
+          }
+        }
+      }
+      
+    }
+    
     //Print the board for testing
-    /*
+    
     for(i = 0; i<size[0]; i++){
       for (j = 0; j<size[1]; j++){
         printf("%d ", bd[i][j]);
@@ -105,7 +156,7 @@ void createBoard(char *filename){
       printf("\n");
     }
     printf("\n");
-    */
+    
     
     freeB(bd, size);
 
@@ -133,7 +184,7 @@ void createBoard(char *filename){
  *    Void;
  *          
  */
-void decideVar(char* filename, char varia[2], int var_coord[2], int** bd, int size[2], int varia6[2]){
+void decideVar(char* filename, char varia[2], int var_coord[2], int** bd, int size[2], int varia6[2],int type){
     if (!strcmp(varia, "A1")){
       filePrint(Variant1(var_coord, bd, size), filename);
     }else if (!strcmp(varia, "A2")){
@@ -145,7 +196,7 @@ void decideVar(char* filename, char varia[2], int var_coord[2], int** bd, int si
     }else if (!strcmp(varia, "A5")){
       filePrint(Variant5(var_coord,bd,size), filename);
     }else if (!strcmp(varia, "A6")){
-      filePrint(Variant6(var_coord,bd,size,varia6), filename);
+      filePrint(Variant6(var_coord,bd,size,varia6,-2, type), filename);
     }
     return;
 }

@@ -5,6 +5,6 @@
 #include <string.h>
 #include "file_handling.h"
 
-void createBoard(char *filename);
-void decideVar(char* filename, char varia[2], int var_coord[2], int** bd, int size[2], int varia6[2]);
+void createBoard(char *filename, int type);
+void decideVar(char* filename, char varia[2], int var_coord[2], int** bd, int size[2], int varia6[2], int type);
 #endif
