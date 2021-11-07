@@ -35,7 +35,7 @@ int **create_adj_matrix(int **bd, int *size, int **adj_matrix, int x)
         if (i==j){
             adj_matrix[i][j] = 0;
         }else{
-            adj_matrix[i][j] = 1000000;
+            adj_matrix[i][j] = -1;
         }
       }
     }
