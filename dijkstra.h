@@ -8,6 +8,6 @@
 
 //\int minDistance(int *dist, bool *sptSet, int x);
 //void printSolution(int *dist, int x);
-void dijkstra(int **adj_matrix, int src, int x);
+int *dijkstra(int **adj_matrix, int src, int x);
 
 #endif

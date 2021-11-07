@@ -16,13 +16,16 @@
 void createBoard(char *filename, int type){
   int **bd = NULL;
   int **adj_matrix = NULL;
+  struct Coordinates **adj_matrix_coord = NULL;
   FILE *fp = NULL;
   char *extra = NULL;
+  int *prev;
   int i;
   int j;
   int numb;
   int a;
   int b;
+  int z;
   int varia6[] = {-1, -1};//array containing the coordenates of the second cell for the variant A6
   int var_coord[2];//array containing the coordenates of the cell
   char varia[2];//variable containing the variant value
@@ -136,21 +139,44 @@ void createBoard(char *filename, int type){
       //! tens aqui o inicio do loop poso
       //! basicamente neste momento as salas estão feitas, so tens de correr o loop
       //! há um ficheiro chamado testing.in para veres isto a funcionar
+      z = (-1)*x -1;
       if(found != 1){
-        adj_matrix = create_adj_matrix(bd, size, adj_matrix, x);
-        dijkstra(adj_matrix, 0, x); 
+        if((adj_matrix_coord = (struct Coordinates **)malloc(sizeof(struct Coordinates *)*z))==NULL){
+          printf("hi");
+          exit(0);
+        }
+        for(i = 0; i<z; i++){
+          if((adj_matrix_coord[i] = (struct Coordinates *)malloc(sizeof(struct Coordinates )*z))==NULL){
+            for(j = 0; j<z; j++){
+              free(adj_matrix_coord[j]);
+            }
+            free(adj_matrix_coord);
+            exit(0);
+          }
+        }
+        adj_matrix = create_adj_matrix(bd, size, adj_matrix, x, adj_matrix_coord);
+        prev = dijkstra(adj_matrix, 0, x);
+        
       }
     }
-    
+    //Print adj_matrix_coord. height or width for testing
+    /* for (i = 0; i<z; i++)
+    {
+        for (j = 0; j<z; j++)
+        {
+          printf("%d ", adj_matrix_coord[i][j].width);
+        }
+        printf("\n");
+    } */
     //Print the board for testing
     
-    for(i = 0; i<size[0]; i++){
+    /* for(i = 0; i<size[0]; i++){
       for (j = 0; j<size[1]; j++){
         printf("%d ", bd[i][j]);
       }
       printf("\n");
     }
-    printf("\n");
+    printf("\n"); */
     
     
     freeB(bd, size);

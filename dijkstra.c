@@ -44,7 +44,7 @@ void printSolution(int *dist, int x, int *prev)
  
 // Function that implements Dijkstra's single source shortest path algorithm
 // for a graph represented using adjacency matrix representation
-void dijkstra(int **adj_matrix, int src, int x)
+int *dijkstra(int **adj_matrix, int src, int x)
 {
     int i, j, u, v;
     x = (-1)*x - 1; 
@@ -100,6 +100,7 @@ void dijkstra(int **adj_matrix, int src, int x)
     //printf("%p", prev);
     printSolution(dist, x, prev);
     printf("\n\n");
+    return prev;
     /* for (i = 0; i < x; i++){
         printf("%d: %d\t", i +1, sptSet[i]);
     } */
