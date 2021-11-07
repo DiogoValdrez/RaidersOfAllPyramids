@@ -399,7 +399,7 @@ int search(int x, int y, int **bd, int *size, int *obj, int flag, int type){
  */
 
 int Variant6(int *var_coord, int **bd, int *size, int *obj, int flag, int type){
-    if(bd[var_coord[0]-1][var_coord[1]-1] != 0 || bd[obj[0]-1][obj[1]-1] != 0){
+    if((bd[var_coord[0]-1][var_coord[1]-1] != 0) || ((bd[obj[0]-1][obj[1]-1] != 0) && type == 1)){
         return 0;
     }
     return search(var_coord[0]-1,var_coord[1]-1,bd,size,obj,flag, type);

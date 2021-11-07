@@ -15,6 +15,7 @@
  */
 void createBoard(char *filename, int type){
   int **bd = NULL;
+  int **adj_matrix = NULL;
   FILE *fp = NULL;
   char *extra = NULL;
   int i;
@@ -27,6 +28,7 @@ void createBoard(char *filename, int type){
   char varia[2];//variable containing the variant value
   int size[2];
   int varia6E = 0;
+  int found = 0;
 
   fp = getFile(fp,filename,extra,type);
   read(fp, 'd', &(size[0]), bd, size, 0);
@@ -124,27 +126,20 @@ void createBoard(char *filename, int type){
           }
         }
       }
+      printf("%d\n\n\n", x);
       //check if the beguining in a room(if not impossible)
       //talvez este check possa ser feito mais cedo
       if(bd[0][0] == bd[var_coord[0]-1][var_coord[1]-1]){
-        int found = 1;
+        found = 1;
         //fazer o return a dizer que estão na mesma sala
       }
-
       //! tens aqui o inicio do loop poso
       //! basicamente neste momento as salas estão feitas, so tens de correr o loop
       //! há um ficheiro chamado testing.in para veres isto a funcionar
-      if(!found){
-        for(i = 1; i<=size[0]; i++){
-          for(j = 1; j<=size[1]; j++){
-            if(bd[i-1][j-1] > 0){
-              //check both sides
-              //se forem diferentes e o valor for menor que o q esta no grafo trocar
-            }
-          }
-        }
+      if(found != 1){
+        adj_matrix = create_adj_matrix(bd, size, adj_matrix, x);
+        dijkstra(adj_matrix, 0, x); 
       }
-      
     }
     
     //Print the board for testing
