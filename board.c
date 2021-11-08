@@ -103,11 +103,10 @@ void createBoard(char *filename, int type){
     if(type){
       decideVar(filename, varia, var_coord, bd, size, varia6, type);
     }else{
-      printf("Second submission\n");
-      printf("make room(s) for you, if you know what I mean ¬‿¬\n");
       //ver se é realmente necessário isto da variante 5
       int xy[2];
       int found = 0;
+      //int obj_room;
       /*for(i = 1; i<=size[0]; i++){
         for(j = 1; j<=size[1]; j++){
           xy[0] = i;
@@ -129,25 +128,20 @@ void createBoard(char *filename, int type){
           }
         }
       }
-      printf("%d\n\n\n", x);
       //check if the beguining in a room(if not impossible)
       //talvez este check possa ser feito mais cedo
       if(bd[0][0] == bd[var_coord[0]-1][var_coord[1]-1]){
         found = 1;
         //fazer o return a dizer que estão na mesma sala
       }
-      //! tens aqui o inicio do loop poso
-      //! basicamente neste momento as salas estão feitas, so tens de correr o loop
-      //! há um ficheiro chamado testing.in para veres isto a funcionar
       z = (-1)*x -1;
       if(found != 1){
         if((adj_matrix_coord = (struct Coordinates **)malloc(sizeof(struct Coordinates *)*z))==NULL){
-          printf("hi");
           exit(0);
         }
         for(i = 0; i<z; i++){
           if((adj_matrix_coord[i] = (struct Coordinates *)malloc(sizeof(struct Coordinates )*z))==NULL){
-            for(j = 0; j<z; j++){
+            for(j = 0; j<i; j++){//este free esta mal, so damos free do que for necessári, n é z, ver se há mais frees assim
               free(adj_matrix_coord[j]);
             }
             free(adj_matrix_coord);
@@ -156,7 +150,21 @@ void createBoard(char *filename, int type){
         }
         adj_matrix = create_adj_matrix(bd, size, adj_matrix, x, adj_matrix_coord);
         prev = dijkstra(adj_matrix, 0, x);
+
+        /*obj_room = bd[var_coord[0]-1][var_coord[1]-1];
+        printf("%d\n", obj_room);
+        obj_room = (-1)*obj_room-1;
+        printf("%d\n", obj_room);
+        printPath(prev, z-1);*/
         
+
+
+        for(j = 0; j<z; j++){
+          free(adj_matrix_coord[j]);
+        }
+        free(adj_matrix_coord);
+        free(prev);
+        free_adj_matrix(adj_matrix, x);
       }
     }
     //Print adj_matrix_coord. height or width for testing

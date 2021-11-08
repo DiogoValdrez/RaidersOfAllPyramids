@@ -6,8 +6,9 @@
 #include <limits.h>
 #include <stdbool.h>
 
-//\int minDistance(int *dist, bool *sptSet, int x);
-//void printSolution(int *dist, int x);
 int *dijkstra(int **adj_matrix, int src, int x);
+int minDistance(int *dist, bool *sptSet, int x);
+void printPath(int *prev, int j);
+void printSolution(int *dist, int x, int *prev);
 
 #endif

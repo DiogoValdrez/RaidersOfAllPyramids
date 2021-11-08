@@ -97,33 +97,14 @@ int *dijkstra(int **adj_matrix, int src, int x)
  
     // print the constructed distance array
     printf("\n\n");
-    //printf("%p", prev);
+
     printSolution(dist, x, prev);
     printf("\n\n");
+
+    free(dist);
+    free(sptSet);
+
+
     return prev;
-    /* for (i = 0; i < x; i++){
-        printf("%d: %d\t", i +1, sptSet[i]);
-    } */
 
 }
-
-/* void dijkstra(int **adj_matrix, int src, int x, int target)
-{
-    int i;
-    int *dist, *prev;
-    if(( dist = (int *)malloc(sizeof(int)*x)) == NULL){
-        exit(0);
-    }
-    if(( prev = (int *)malloc(sizeof(int)*x)) == NULL){
-        exit(0);
-    }
-    
-    for (i= 1; i < x; i++){
-        dist[i] = INT_MAX;
-        prev[i] = -1;
-    }
-    dist[src] = 0;
-    prev[src] = 0;
-}
-
- */
