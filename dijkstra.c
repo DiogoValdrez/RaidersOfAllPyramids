@@ -26,7 +26,7 @@ void Dijkstra(int **Graph, int x, int start) {
         mindistance = -1;
 
         for (i = 0; i < x; i++)
-        if (distance[i] < mindistance && !visited[i]) {//a partir de aqui ter em atenção que temos de verificar todos os -1 em vez de ser só menor
+        if ((distance[i] == -1 && !visited[i] )||( distance[i] < mindistance && !visited[i])) {//a partir de aqui ter em atenção que temos de verificar todos os -1 em vez de ser só menor
             mindistance = distance[i];
             nextnode = i;
         }
@@ -34,7 +34,7 @@ void Dijkstra(int **Graph, int x, int start) {
         visited[nextnode] = 1;
         for (i = 0; i < x; i++)
         if (!visited[i])
-            if (mindistance + cost[nextnode][i] < distance[i]) {
+            if (mindistance + cost[nextnode][i] < distance[i]) {//aqui
             distance[i] = mindistance + cost[nextnode][i];
             pred[i] = nextnode;
             }
