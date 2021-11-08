@@ -57,26 +57,25 @@ int **create_adj_matrix(int **bd, int *size, int **adj_matrix, int x, struct Coo
         {
             if (bd[i][j] > 0)
             {
-                if ((i == 0 || i == (size[0] - 1)))
+                if ((i == 0 || i == (size[0] - 1)) && (j != 0) && (j != (size[1]-1)))
                 {
-                    if (bd[i][j-1] < -1 && bd[i][j+1] < -1 && j != 0 && j != (size[2]-1))
+                    if (bd[i][j-1] < -1 && bd[i][j+1] < -1 )
                     {
                         new_edge(adj_matrix, bd[i][j-1], bd[i][j+1], bd[i][j], adj_matrix_coord, i, j);
                     }
-                }else if ((j == 0 || j == (size[1] - 1)) )
+                }else if ((j == 0 || j == (size[1] - 1)) && i != 0 && i != (size[0]-1))
                 {
-                    if (bd[i-1][j] < -1 && bd[i+1][j] < -1 && i != 0 && i != (size[0]-1))
+                    if (bd[i-1][j] < -1 && bd[i+1][j] < -1 )
                     {
                         new_edge(adj_matrix, bd[i-1][j], bd[i+1][j], bd[i][j], adj_matrix_coord, i, j);
                     }
-                }else
+                }else if (i != 0 && j != 0 && i != (size[0]-1) && j != (size[1] - 1)) 
                 {
                     if (bd[i][j-1] < -1 && bd[i][j+1] < -1)
                     {
                         new_edge(adj_matrix, bd[i][j-1], bd[i][j+1], bd[i][j], adj_matrix_coord, i, j);
                     }else if(bd[i-1][j] < -1 && bd[i+1][j] < -1)
                     {
-                        //printf("%d", bd[i+1][j]);
                         new_edge(adj_matrix, bd[i-1][j], bd[i+1][j], bd[i][j], adj_matrix_coord, i, j);
                     }
                 }
