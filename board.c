@@ -30,6 +30,8 @@ void createBoard(char *filename, int type){
   int varia6E = 0;
   int found = 0;
 
+  Coordinates **adj_matrix_coord = NULL;
+
   fp = getFile(fp,filename,extra,type);
   read(fp, 'd', &(size[0]), bd, size, 0);
   do{
@@ -135,7 +137,23 @@ void createBoard(char *filename, int type){
       }
       if(found != 1){
         int z = (-1)*x - 1;
-        adj_matrix = create_adj_matrix(bd, size, adj_matrix, x);
+
+
+        if((adj_matrix_coord = (Coordinates **)malloc(sizeof(Coordinates *)*z))==NULL){
+          exit(0);
+        }
+        for(i = 0; i<z; i++){
+          if((adj_matrix_coord[i] = (Coordinates *)malloc(sizeof(Coordinates )*z))==NULL){
+            for(j = 0; j<i; j++){//este free esta mal, so damos free do que for necessári, n é z, ver se há mais frees assim
+              free(adj_matrix_coord[j]);
+            }
+            free(adj_matrix_coord);
+            exit(0);
+          }
+        }
+
+
+        adj_matrix = create_adj_matrix(bd, size, adj_matrix, x, adj_matrix_coord);
         int** cost = (int**)malloc(z*sizeof(int*));
         for(i = 0; i< z; i++){
           cost[i] = (int*)malloc(z*sizeof(int));
@@ -151,6 +169,11 @@ void createBoard(char *filename, int type){
         printf("\n");
 
 
+
+        for(j = 0; j<z; j++){
+          free(adj_matrix_coord[j]);
+        }
+        free(adj_matrix_coord);
         free_adj_matrix(adj_matrix, x);//faltam o resto dos free e talvez trocar os sitios onde estão x por z verificações no malloc
         free(visited);
         free(pred);
