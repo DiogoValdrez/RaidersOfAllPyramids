@@ -6,8 +6,6 @@
 #include <limits.h>
 #include <stdbool.h>
 
-//\int minDistance(int *dist, bool *sptSet, int x);
-//void printSolution(int *dist, int x);
-void dijkstra(int **adj_matrix, int src, int x);
+void Dijkstra(int **Graph, int x, int start);
 
 #endif

@@ -17,7 +17,7 @@ int **create_adj_matrix(int **bd, int *size, int **adj_matrix, int x)
 {
     int i,j;
     x = (-1)*x -1;
-    //Allocate space for matrix and initialize it with the value of -1
+    //Allocate space for matrix and initialize it with the 
     if((adj_matrix = (int **)malloc(sizeof(int*)*x))==NULL){
       exit(0);
     }
@@ -35,7 +35,7 @@ int **create_adj_matrix(int **bd, int *size, int **adj_matrix, int x)
         if (i==j){
             adj_matrix[i][j] = 0;
         }else{
-            adj_matrix[i][j] = 1000000;
+            adj_matrix[i][j] = -1;
         }
       }
     }
@@ -75,13 +75,13 @@ int **create_adj_matrix(int **bd, int *size, int **adj_matrix, int x)
         
     }
     
-    /* for (int i=0; i<x; i++){
+    for (int i=0; i<x; i++){
         for(j= 0; j<x; j++){
             printf("%d ", adj_matrix[i][j]);
         }
         printf("\n");
     }
-    printf("\n"); */
+    printf("\n");
     return adj_matrix;
 }
 
