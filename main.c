@@ -43,3 +43,11 @@ int main(int argc, char *argv[])
 }
 
 
+//!comentarios
+//!refactoring
+//! -O3
+//!dar free da bd mais cedo
+//! tentar poupar memoria e dar frees o mais cedo possivel
+//! mudar nomes de variaveis para nomes decentes
+//! por tudo nos .h
+//! tirar prints

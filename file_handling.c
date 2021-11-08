@@ -55,7 +55,17 @@ void filePrint(int value, char *filename){
     exit(0);
   }
   fprintf(fp, "%d\n", value);
-  fprintf(fp, "\n");
+  fclose(fp);
+  return;
+}
+
+void filePrintV(int value, int value2, int value3, char *filename){
+  FILE *fp;
+
+  if((fp = fopen(filename, "a"))==NULL){
+    exit(0);
+  }
+  fprintf(fp, "%d %d %d\n", value, value2, value3);
   fclose(fp);
   return;
 }

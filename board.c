@@ -133,7 +133,7 @@ void createBoard(char *filename, int type){
       //talvez este check possa ser feito mais cedo
       if(bd[0][0] == bd[var_coord[0]-1][var_coord[1]-1]){
         found = 1;
-        //fazer o return a dizer que estão na mesma sala
+        filePrint(0, filename);
       }
       if(found != 1){
         int z = (-1)*x - 1;
@@ -162,14 +162,80 @@ void createBoard(char *filename, int type){
         int* pred = (int*)malloc(z*sizeof(int));
         int* visited = (int*)malloc(z*sizeof(int));
         Dijkstra(adj_matrix, z, 0, cost, distance, pred, visited);
-
+        
+        for(i = 0; i<z; i++){
+          for (j = 0; j<z; j++){
+            printf("%d ", adj_matrix[i][j]);
+          }
+          printf("\n");
+        }
+        printf("\n");
         for(i = 0; i< z; i++){
-          printf("|%d", pred[i]);
+          printf("|%d", distance[i]);
         }
         printf("\n");
 
 
+        int obj = bd[var_coord[0]-1][var_coord[1]-1];
+        obj = (-1)*obj - 2;
+        if(distance[obj] == -1){//verificar se objetivo é realmente um 0
+          filePrint(-1, filename);
+          for(j = 0; j<z; j++){
+            free(adj_matrix_coord[j]);
+          }
+          free(adj_matrix_coord);
+          free_adj_matrix(adj_matrix, x);//faltam o resto dos free e talvez trocar os sitios onde estão x por z verificações no malloc
+          free(visited);
+          free(pred);
+          free(distance);
+          for(i = 0; i< z; i++){
+            free(cost[i]);
+          }
+          free(cost); 
+          freeB(bd, size);
+          continue;
+        }
+        //printf("custo: %d\n", distance[obj]);
+        filePrint(distance[obj], filename);
+        
+        i = obj;
+        j = i;
+        int count = 0;
+        while(pred[i] != i){
+          i = pred[i]; 
+          j = i;         
+          count++;
+        }
+        //printf("count: %d\n", count);
+        filePrint(count, filename);
 
+
+        int** vect = (int**)malloc(sizeof(int*)*count);
+        for(i = 0; i <count;i++){
+          vect[i] = (int*)malloc(sizeof(int)*3);
+        }
+        count = 0;
+        i = obj;
+        j = i;
+        while(pred[i] != i){
+          i = pred[i]; 
+          //printf("|%d %d %d\n", adj_matrix_coord[i][j].height + 1,adj_matrix_coord[i][j].width + 1, adj_matrix[i][j]);
+          vect[count][0] = adj_matrix_coord[i][j].height + 1;
+          vect[count][1] = adj_matrix_coord[i][j].width + 1;
+          vect[count][2] = adj_matrix[i][j];
+          j = i;    
+          count++;     
+        }
+        for(i = count - 1; i>=0; i--){
+          filePrintV(vect[i][0],vect[i][1],vect[i][2], filename);
+        }
+
+
+
+        for(i = 0; i <count;i++){
+          free(vect[i]);
+        }
+        free(vect);
         for(j = 0; j<z; j++){
           free(adj_matrix_coord[j]);
         }

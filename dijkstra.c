@@ -7,7 +7,7 @@ void Dijkstra(int **Graph, int x, int start, int** cost, int* distance, int* pre
     for (i = 0; i < x; i++)
         for (j = 0; j < x; j++)
         if (Graph[i][j] == -1)
-            cost[i][j] = INT_MAX;
+            cost[i][j] = INT_MAX;//por aqui a matriz de adjacencias para poupar memoria
         else
             cost[i][j] = Graph[i][j];
 
@@ -55,7 +55,7 @@ void Dijkstra(int **Graph, int x, int start, int** cost, int* distance, int* pre
             distance[i] = -1;
         }
         if (i != start) {
-        printf("\nDistance from source to %d: %d\n", i, distance[i]);
+        //printf("\nDistance from source to %d: %d\n", i, distance[i]);
         }
     }
 }
