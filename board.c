@@ -134,9 +134,31 @@ void createBoard(char *filename, int type){
         //fazer o return a dizer que estão na mesma sala
       }
       if(found != 1){
+        int z = (-1)*x - 1;
         adj_matrix = create_adj_matrix(bd, size, adj_matrix, x);
-        Dijkstra(adj_matrix, (-1)*x - 1, 0);
-        free_adj_matrix(adj_matrix, x);
+        int** cost = (int**)malloc(z*sizeof(int*));
+        for(i = 0; i< z; i++){
+          cost[i] = (int*)malloc(z*sizeof(int));
+        }
+        int* distance = (int*)malloc(z*sizeof(int));
+        int* pred = (int*)malloc(z*sizeof(int));
+        int* visited = (int*)malloc(z*sizeof(int));
+        Dijkstra(adj_matrix, z, 0, cost, distance, pred, visited);
+
+        for(i = 0; i< z; i++){
+          printf("|%d", pred[i]);
+        }
+        printf("\n");
+
+
+        free_adj_matrix(adj_matrix, x);//faltam o resto dos free e talvez trocar os sitios onde estão x por z verificações no malloc
+        free(visited);
+        free(pred);
+        free(distance);
+        for(i = 0; i< z; i++){
+          free(cost[i]);
+        }
+        free(cost);
       }
     }
     

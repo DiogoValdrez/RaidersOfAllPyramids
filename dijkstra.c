@@ -1,14 +1,13 @@
 #include "dijkstra.h"
 
-void Dijkstra(int **Graph, int x, int start) {
-    int cost[x][x], distance[x], pred[x];
-    int visited[x], count, mindistance, nextnode, i, j;
+void Dijkstra(int **Graph, int x, int start, int** cost, int* distance, int* pred, int* visited) {
+    int count, mindistance, nextnode, i, j;
 
     // Creating cost matrix
     for (i = 0; i < x; i++)
         for (j = 0; j < x; j++)
-        if (Graph[i][j] == 0)
-            cost[i][j] = -1;
+        if (Graph[i][j] == -1)
+            cost[i][j] = INT_MAX;
         else
             cost[i][j] = Graph[i][j];
 
@@ -22,28 +21,41 @@ void Dijkstra(int **Graph, int x, int start) {
     visited[start] = 1;
     count = 1;
 
+    /* print da matriz de custos
+    for (i = 0; i < x; i++){
+        for (j = 0; j < x; j++){
+            printf("%d ", cost[i][j]);
+        }
+        printf("\n");
+    }*/
+
     while (count < x - 1) {
-        mindistance = -1;
+        mindistance = INT_MAX;
 
         for (i = 0; i < x; i++)
-        if ((distance[i] == -1 && !visited[i] )||( distance[i] < mindistance && !visited[i])) {//a partir de aqui ter em atenção que temos de verificar todos os -1 em vez de ser só menor
+        if (( distance[i] < mindistance && !visited[i])&&distance[i] > 0) {//a partir de aqui ter em atenção que temos de verificar todos os -1 em vez de ser só menor
             mindistance = distance[i];
             nextnode = i;
         }
 
         visited[nextnode] = 1;
         for (i = 0; i < x; i++)
-        if (!visited[i])
-            if (mindistance + cost[nextnode][i] < distance[i]) {//aqui
+        if (!visited[i]){
+            if ((mindistance + cost[nextnode][i] < distance[i])&& mindistance + cost[nextnode][i] > 0){//aqui
             distance[i] = mindistance + cost[nextnode][i];
             pred[i] = nextnode;
             }
+        }
         count++;
     }
 
     // Printing the distance
-    for (i = 0; i < x; i++)
+    for (i = 0; i < x; i++){
+        if(distance[i] == INT_MAX || distance[i] < 0) {
+            distance[i] = -1;
+        }
         if (i != start) {
         printf("\nDistance from source to %d: %d\n", i, distance[i]);
         }
+    }
 }
