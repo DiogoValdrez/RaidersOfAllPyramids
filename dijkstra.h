@@ -6,6 +6,6 @@
 #include <limits.h>
 #include <stdbool.h>
 
-void Dijkstra(int **Graph, int x, int start, int** cost, int* distance, int* pred, int* visited);
+void Dijkstra(int **Graph, int x, int start, int* distance, int* pred, int* visited);
 
 #endif

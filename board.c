@@ -162,14 +162,14 @@ void createBoard(char *filename, int type){
 
 
         adj_matrix = create_adj_matrix(bd, size, adj_matrix, x, adj_matrix_coord);
-        int** cost = (int**)malloc(z*sizeof(int*));
-        for(i = 0; i< z; i++){
+        //int** cost = (int**)malloc(z*sizeof(int*));
+        /* for(i = 0; i< z; i++){
           cost[i] = (int*)malloc(z*sizeof(int));
-        }
+        } */
         int* distance = (int*)malloc(z*sizeof(int));
         int* pred = (int*)malloc(z*sizeof(int));
         int* visited = (int*)malloc(z*sizeof(int));
-        Dijkstra(adj_matrix, z, 0, cost, distance, pred, visited);
+        Dijkstra(adj_matrix, z, 0, distance, pred, visited);
         
         /*for(i = 0; i<z; i++){
           for (j = 0; j<z; j++){
@@ -196,10 +196,10 @@ void createBoard(char *filename, int type){
           free(visited);
           free(pred);
           free(distance);
-          for(i = 0; i< z; i++){
+         /*  for(i = 0; i< z; i++){
             free(cost[i]);
           }
-          free(cost); 
+          free(cost); */ 
           freeB(bd, size);
           continue;
         }
@@ -252,10 +252,10 @@ void createBoard(char *filename, int type){
         free(visited);
         free(pred);
         free(distance);
-        for(i = 0; i< z; i++){
+        /* for(i = 0; i< z; i++){
           free(cost[i]);
         }
-        free(cost);
+        free(cost); */
       }
     }
     

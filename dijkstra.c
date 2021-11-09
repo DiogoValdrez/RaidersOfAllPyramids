@@ -1,15 +1,13 @@
 #include "dijkstra.h"
 
-void Dijkstra(int **Graph, int x, int start, int** cost, int* distance, int* pred, int* visited) {
+void Dijkstra(int **cost, int x, int start, int* distance, int* pred, int* visited) {//tirar os tart e por apenas 0
     int count, mindistance, nextnode, i, j;
 
     // Creating cost matrix
     for (i = 0; i < x; i++)
         for (j = 0; j < x; j++)
-        if (Graph[i][j] == -1)
-            cost[i][j] = INT_MAX;//por aqui a matriz de adjacencias para poupar memoria
-        else
-            cost[i][j] = Graph[i][j];
+        if (cost[i][j] == -1)
+            cost[i][j] = INT_MAX;//por -1 logo na matriz de adjacencias
 
     for (i = 0; i < x; i++) {
         distance[i] = cost[start][i];
