@@ -74,7 +74,8 @@ int **create_adj_matrix(int **bd, int *size, int **adj_matrix, int x, Coordinate
                     if (bd[i][j-1] < -1 && bd[i][j+1] < -1)
                     {
                         new_edge(adj_matrix, bd[i][j-1], bd[i][j+1], bd[i][j], adj_matrix_coord, i, j);
-                    }else if(bd[i-1][j] < -1 && bd[i+1][j] < -1)
+                    }
+                    if(bd[i-1][j] < -1 && bd[i+1][j] < -1)
                     {
                         new_edge(adj_matrix, bd[i-1][j], bd[i+1][j], bd[i][j], adj_matrix_coord, i, j);
                     }
