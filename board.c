@@ -61,7 +61,12 @@ void createBoard(char *filename, int type){
         read(fp, 'd', &b, bd, size, 0);
         read(fp, 'd', &a, bd, size, 0);
       }
-      filePrint(-2, filename);
+      if(type){
+        filePrint(-2, filename);
+      }else{
+        filePrint(-1, filename);
+      }
+      
       varia6E = 0;
       continue;
     }
@@ -163,7 +168,7 @@ void createBoard(char *filename, int type){
         int* visited = (int*)malloc(z*sizeof(int));
         Dijkstra(adj_matrix, z, 0, cost, distance, pred, visited);
         
-        for(i = 0; i<z; i++){
+        /*for(i = 0; i<z; i++){
           for (j = 0; j<z; j++){
             printf("%d ", adj_matrix[i][j]);
           }
@@ -173,7 +178,7 @@ void createBoard(char *filename, int type){
         for(i = 0; i< z; i++){
           printf("|%d", distance[i]);
         }
-        printf("\n");
+        printf("\n");*/
 
 
         int obj = bd[var_coord[0]-1][var_coord[1]-1];
@@ -253,13 +258,13 @@ void createBoard(char *filename, int type){
     
     //Print the board for testing
     
-    for(i = 0; i<size[0]; i++){
+    /*for(i = 0; i<size[0]; i++){
       for (j = 0; j<size[1]; j++){
         printf("%d ", bd[i][j]);
       }
       printf("\n");
     }
-    printf("\n");
+    printf("\n");*/
     
     
     freeB(bd, size);
