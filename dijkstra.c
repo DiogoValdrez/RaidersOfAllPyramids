@@ -1,7 +1,8 @@
 #include "dijkstra.h"
 
 void Dijkstra(int **cost, int x, int start, int* distance, int* pred, int* visited) {//tirar os tart e por apenas 0
-    int count, mindistance, nextnode, i, j;
+    int count, mindistance, i, j;
+    int nextnode = 0;
 
     // Creating cost matrix
     for (i = 0; i < x; i++)

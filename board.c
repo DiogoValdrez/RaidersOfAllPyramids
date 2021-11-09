@@ -107,11 +107,10 @@ void createBoard(char *filename, int type){
     if(type){
       decideVar(filename, varia, var_coord, bd, size, varia6, type);
     }else{
-      printf("Second submission\n");
-      printf("make room(s) for you, if you know what I mean ¬‿¬\n");
+      /* printf("Second submission\n");
+      printf("make room(s) for you, if you know what I mean ¬‿¬\n"); */
       //ver se é realmente necessário isto da variante 5
       int xy[2];
-      int found = 0;
       /*for(i = 1; i<=size[0]; i++){
         for(j = 1; j<=size[1]; j++){
           xy[0] = i;
