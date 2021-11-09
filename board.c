@@ -121,7 +121,10 @@ void createBoard(char *filename, int type){
           }
         }
       }*/
-      
+      if(bd[var_coord[0]-1][var_coord[1]-1]!=0){
+        found = 1;
+        filePrint(-1, filename);
+      }
       int x = -1;
       for(i = 1; i<=size[0]; i++){
         for(j = 1; j<=size[1]; j++){
