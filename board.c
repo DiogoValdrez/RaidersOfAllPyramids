@@ -15,7 +15,7 @@
  */
 void createBoard(char *filename, int type){
   int **bd = NULL;
-  int **adj_matrix = NULL;
+  graph *adj_matrix = NULL;
   FILE *fp = NULL;
   char *extra = NULL;
   int i;
@@ -29,8 +29,8 @@ void createBoard(char *filename, int type){
   int size[2];
   int varia6E = 0;
   int found;
+  edge e;
 
-  Coordinates **adj_matrix_coord = NULL;
 
   fp = getFile(fp,filename,extra,type);
   read(fp, 'd', &(size[0]), bd, size, 0);
@@ -147,21 +147,61 @@ void createBoard(char *filename, int type){
         int z = (-1)*x - 1;
 
 
-        if((adj_matrix_coord = (Coordinates **)malloc(sizeof(Coordinates *)*z))==NULL){
-          exit(0);
-        }
-        for(i = 0; i<z; i++){
-          if((adj_matrix_coord[i] = (Coordinates *)malloc(sizeof(Coordinates )*z))==NULL){
-            for(j = 0; j<i; j++){//este free esta mal, so damos free do que for necessári, n é z, ver se há mais frees assim
-              free(adj_matrix_coord[j]);
+
+        adj_matrix = newG(z);
+
+          for (i=0;i<size[0]; i++)
+          {
+            for (j= 0; j<size[1]; j++)
+            {
+              if (bd[i][j] > 0)
+              {
+                  if ((i == 0 || i == (size[0] - 1)) && (j != 0) && (j != (size[1]-1)))
+                  {
+                      if (bd[i][j-1] < -1 && bd[i][j+1] < -1 )
+                      {
+                        e.ini = (-1)*(bd[i][j-1]) - 2;
+                        e.fin = (-1)*(bd[i][j+1]) - 2;
+                        e.peso = bd[i][j];
+                        e.i = i;
+                        e.j = j;
+                        AddG(adj_matrix, &e);
+                      }
+                  }else if ((j == 0 || j == (size[1] - 1)) && i != 0 && i != (size[0]-1))
+                  {
+                      if (bd[i-1][j] < -1 && bd[i+1][j] < -1 )
+                      {
+                        e.ini = (-1)*(bd[i-1][j]) - 2;
+                        e.fin = (-1)*(bd[i+1][j]) - 2;
+                        e.peso = bd[i][j];
+                        e.i = i;
+                        e.j = j;
+                        AddG(adj_matrix, &e);
+                      }
+                  }else if (i != 0 && j != 0 && i != (size[0]-1) && j != (size[1] - 1)) 
+                  {
+                      if (bd[i][j-1] < -1 && bd[i][j+1] < -1)
+                      {
+                        e.ini = (-1)*(bd[i][j-1]) - 2;
+                        e.fin = (-1)*(bd[i][j+1]) - 2;
+                        e.peso = bd[i][j];
+                        e.i = i;
+                        e.j = j;
+                        AddG(adj_matrix, &e);
+                      }
+                      if(bd[i-1][j] < -1 && bd[i+1][j] < -1)
+                      {
+                        e.ini = (-1)*(bd[i-1][j]) - 2;
+                        e.fin = (-1)*(bd[i+1][j]) - 2;
+                        e.peso = bd[i][j];
+                        e.i = i;
+                        e.j = j;
+                        AddG(adj_matrix, &e);
+                      }
+                  }
+              }
             }
-            free(adj_matrix_coord);
-            exit(0);
-          }
-        }
-
-
-        adj_matrix = create_adj_matrix(bd, size, adj_matrix, x, adj_matrix_coord);
+          }   
         //int** cost = (int**)malloc(z*sizeof(int*));
         /* for(i = 0; i< z; i++){
           cost[i] = (int*)malloc(z*sizeof(int));
@@ -189,10 +229,8 @@ void createBoard(char *filename, int type){
         if(distance[obj] == -1){//verificar se objetivo é realmente um 0
           filePrint(-1, filename);
           for(j = 0; j<z; j++){
-            free(adj_matrix_coord[j]);
+            //free
           }
-          free(adj_matrix_coord);
-          free_adj_matrix(adj_matrix, x);//faltam o resto dos free e talvez trocar os sitios onde estão x por z verificações no malloc
           free(visited);
           free(pred);
           free(distance);
@@ -224,14 +262,34 @@ void createBoard(char *filename, int type){
         }
         count = 0;
         i = obj;
-        j = i;
+        //j = i;
+        //int k;
+        LinkedList *list;
+        itemG *item;
+        /* for (k=0; k < adj_matrix->V; k++){
+          list = adj_matrix->adj[k];
+          item = getItemLinkedList(list);
+          while (list != NULL) {
+            vect[][0] = item->i + 1;
+            vect[count][1] = item->j + 1;
+            vect[count][2] = item->peso;
+            list = getNextNodeLinkedList(list);
+          }
+        } */
         while(pred[i] != i){
-          i = pred[i]; 
+          list = adj_matrix->adj[i];
+          item = getItemLinkedList(list);
+          i = pred[i];
           //printf("|%d %d %d\n", adj_matrix_coord[i][j].height + 1,adj_matrix_coord[i][j].width + 1, adj_matrix[i][j]);
-          vect[count][0] = adj_matrix_coord[i][j].height + 1;
-          vect[count][1] = adj_matrix_coord[i][j].width + 1;
-          vect[count][2] = adj_matrix[i][j];
-          j = i;    
+          while ( item->dest != i)
+          {
+            list = getNextNodeLinkedList(list);
+            item = getItemLinkedList(list);
+          }
+
+          vect[count][0] = item->i;
+          vect[count][1] = item->j;
+          vect[count][2] = item->peso;    
           count++;     
         }
         for(i = count - 1; i>=0; i--){
@@ -244,11 +302,7 @@ void createBoard(char *filename, int type){
           free(vect[i]);
         }
         free(vect);
-        for(j = 0; j<z; j++){
-          free(adj_matrix_coord[j]);
-        }
-        free(adj_matrix_coord);
-        free_adj_matrix(adj_matrix, x);//faltam o resto dos free e talvez trocar os sitios onde estão x por z verificações no malloc
+        /* Freeeeeee */
         free(visited);
         free(pred);
         free(distance);

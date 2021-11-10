@@ -1,5 +1,5 @@
 #include "adjacency_matrix.h"
-void new_edge(int **adj_matrix, int vert1, int vert2, int weight, Coordinates **adj_matrix_coord, int height, int width)
+/* void new_edge(int **adj_matrix, int vert1, int vert2, int weight, Coordinates **adj_matrix_coord, int height, int width)
 {
     int ind1 = (-1)*vert1 - 2;
     int ind2 = (-1)*vert2 - 2;
@@ -14,11 +14,11 @@ void new_edge(int **adj_matrix, int vert1, int vert2, int weight, Coordinates **
         adj_matrix_coord[ind2][ind1].width = width;
 
     }
-}
+} */
 
 
 
-int **create_adj_matrix(int **bd, int *size, int **adj_matrix, int x, Coordinates **adj_matrix_coord)
+/* int **create_adj_matrix(int **bd, int *size, int **adj_matrix, int x, Coordinates **adj_matrix_coord)
 {
     int i,j;
     x = (-1)*x -1;
@@ -85,17 +85,17 @@ int **create_adj_matrix(int **bd, int *size, int **adj_matrix, int x, Coordinate
         
     }
     
-    /* for (int i=0; i<x; i++){
+     for (int i=0; i<x; i++){
         for(j= 0; j<x; j++){
             printf("%d ", adj_matrix[i][j]);
         }
         printf("\n");
     }
-    printf("\n"); */
+    printf("\n"); 
     return adj_matrix;
 }
-
-void free_adj_matrix(int **adj_matrix, int x)
+ */
+/* void free_adj_matrix(int **adj_matrix, int x)
 {
     int i;
     x = (-1)*x - 1;
@@ -104,4 +104,99 @@ void free_adj_matrix(int **adj_matrix, int x)
     }
     free(adj_matrix);
     return;
+} */
+
+graph* newG(int V)
+{
+  graph *new;
+  int i;
+
+  if((new= (graph*)malloc(sizeof(graph)))==NULL){
+      printf("Memory allocation failure\n");
+      exit(1);
+  }
+  
+  new->V=V;
+  //new->E=0;
+
+  if((new->adj= (LinkedList**) malloc( V * sizeof(LinkedList*)))==NULL){
+      printf("Memory allocation failure\n");
+      exit(1);
+  }
+
+  for(i=0; i<V; i++){
+    new->adj[i] = initLinkedList();
+  }
+  
+  return new;
+}
+
+
+
+void AddG( graph *Graph, edge *Edge)
+{
+  itemG *new = (itemG*)malloc(sizeof(itemG));
+
+
+  new->dest = Edge->fin;
+  new->peso = Edge->peso;
+  new->i = Edge->i;
+  new->j = Edge->j;
+
+  Graph->adj[Edge->ini] = insertUnsortedLinkedList( Graph->adj[Edge->ini], (Item) new );
+
+  new = (itemG*)malloc(sizeof(itemG));
+
+  new->dest = Edge->ini;
+  new->peso = Edge->peso;
+  new->i = Edge->i;
+  new->j = Edge->j;
+
+  Graph->adj[Edge->fin] = insertUnsortedLinkedList( Graph->adj[Edge->fin], (Item) new );
+  return;
+}
+
+
+void freeG( graph *Graph)
+{
+  int i;
+  for( i=0; i<Graph->V ; i++) {
+    freeLinkedList (Graph->adj[i], free);//!ver aqui o free se esta bem
+  }  
+  free(Graph->adj);
+  free(Graph);
+  return;
+}
+
+
+
+void printG( graph *Graph , FILE *fp )
+{
+  int i;
+  LinkedList *list;
+
+  fprintf( fp, "%d\n", Graph->V );
+
+  for( i=0; i < Graph->V; i++ ) {
+    list = Graph->adj[i];
+ 
+    if(list!=NULL)
+      printRec(list, fp);
+
+    fprintf( fp, "-1 \n");
+   }
+} 
+
+void printRec(LinkedList *aux, FILE *fp)
+{
+  itemG *i;
+  LinkedList *new;
+  
+  i = getItemLinkedList(aux);
+  new = getNextNodeLinkedList(aux);
+  if(new!=NULL){
+    printRec(new, fp);
+  }
+  fprintf(fp, "%d:%d ", i->dest, i->peso);
+
 }
