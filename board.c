@@ -28,7 +28,7 @@ void createBoard(char *filename, int type){
   char varia[2];//variable containing the variant value
   int size[2];
   int varia6E = 0;
-  int found = 0;
+  int found;
 
   Coordinates **adj_matrix_coord = NULL;
 
@@ -111,6 +111,7 @@ void createBoard(char *filename, int type){
       printf("make room(s) for you, if you know what I mean ¬‿¬\n"); */
       //ver se é realmente necessário isto da variante 5
       int xy[2];
+      found = 0;
       /*for(i = 1; i<=size[0]; i++){
         for(j = 1; j<=size[1]; j++){
           xy[0] = i;
