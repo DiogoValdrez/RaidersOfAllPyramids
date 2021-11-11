@@ -29,7 +29,7 @@ void createBoard(char *filename, int type){
   int size[2];
   int varia6E = 0;
   int found;
-  edge e;
+  edge* e;
 
 
   fp = getFile(fp,filename,extra,type);
@@ -107,8 +107,6 @@ void createBoard(char *filename, int type){
     if(type){
       decideVar(filename, varia, var_coord, bd, size, varia6, type);
     }else{
-      /* printf("Second submission\n");
-      printf("make room(s) for you, if you know what I mean ¬‿¬\n"); */
       //ver se é realmente necessário isto da variante 5
       int xy[2];
       found = 0;
@@ -136,8 +134,7 @@ void createBoard(char *filename, int type){
           }
         }
       }
-      //printf("%d\n\n\n", x);
-      //check if the beguining in a room(if not impossible)
+
       //talvez este check possa ser feito mais cedo
       if(bd[0][0] == bd[var_coord[0]-1][var_coord[1]-1]){
         found = 1;
@@ -150,82 +147,75 @@ void createBoard(char *filename, int type){
 
         adj_matrix = newG(z);
 
-          for (i=0;i<size[0]; i++)
-          {
-            for (j= 0; j<size[1]; j++)
-            {
-              if (bd[i][j] > 0)
-              {
-                  if ((i == 0 || i == (size[0] - 1)) && (j != 0) && (j != (size[1]-1)))
-                  {
-                      if (bd[i][j-1] < -1 && bd[i][j+1] < -1 )
-                      {
-                        e.ini = (-1)*(bd[i][j-1]) - 2;
-                        e.fin = (-1)*(bd[i][j+1]) - 2;
-                        e.peso = bd[i][j];
-                        e.i = i;
-                        e.j = j;
-                        AddG(adj_matrix, &e);
-                      }
-                  }else if ((j == 0 || j == (size[1] - 1)) && i != 0 && i != (size[0]-1))
-                  {
-                      if (bd[i-1][j] < -1 && bd[i+1][j] < -1 )
-                      {
-                        e.ini = (-1)*(bd[i-1][j]) - 2;
-                        e.fin = (-1)*(bd[i+1][j]) - 2;
-                        e.peso = bd[i][j];
-                        e.i = i;
-                        e.j = j;
-                        AddG(adj_matrix, &e);
-                      }
-                  }else if (i != 0 && j != 0 && i != (size[0]-1) && j != (size[1] - 1)) 
-                  {
-                      if (bd[i][j-1] < -1 && bd[i][j+1] < -1)
-                      {
-                        e.ini = (-1)*(bd[i][j-1]) - 2;
-                        e.fin = (-1)*(bd[i][j+1]) - 2;
-                        e.peso = bd[i][j];
-                        e.i = i;
-                        e.j = j;
-                        AddG(adj_matrix, &e);
-                      }
-                      if(bd[i-1][j] < -1 && bd[i+1][j] < -1)
-                      {
-                        e.ini = (-1)*(bd[i-1][j]) - 2;
-                        e.fin = (-1)*(bd[i+1][j]) - 2;
-                        e.peso = bd[i][j];
-                        e.i = i;
-                        e.j = j;
-                        AddG(adj_matrix, &e);
-                      }
-                  }
+        for (i=0;i<size[0]; i++){
+          for (j= 0; j<size[1]; j++){
+            if (bd[i][j] > 0){
+              if(i-1>=0 && i+1<size[0] && bd[i-1][j]<-1 && bd[i+1][j]<-1){ 
+                e = (edge*)malloc(sizeof(edge));
+                e->ini = (-1)*(bd[i-1][j]) - 2;
+                e->fin = (-1)*(bd[i+1][j]) - 2;
+                e->peso = bd[i][j];
+                e->i = i;
+                e->j = j;
+                adj_matrix->adj[e->ini] = insertUnsortedLinkedList(adj_matrix->adj[e->ini], e);
+
+                e = (edge*)malloc(sizeof(edge));
+                e->ini = (-1)*(bd[i+1][j]) - 2;
+                e->fin = (-1)*(bd[i-1][j]) - 2;
+                e->peso = bd[i][j];
+                e->i = i;
+                e->j = j;
+                adj_matrix->adj[e->ini] = insertUnsortedLinkedList(adj_matrix->adj[e->ini], e);
+              }
+              if(j-1>=0 && j+1<size[1]&& bd[i][j+1]<-1 && bd[i][j-1]<-1){
+                e = (edge*)malloc(sizeof(edge));
+                e->ini = (-1)*(bd[i][j-1]) - 2;
+                e->fin = (-1)*(bd[i][j+1]) - 2;
+                e->peso = bd[i][j];
+                e->i = i;
+                e->j = j;
+                adj_matrix->adj[e->ini] = insertUnsortedLinkedList(adj_matrix->adj[e->ini], e);
+
+                e = (edge*)malloc(sizeof(edge));
+                e->ini = (-1)*(bd[i][j+1]) - 2;
+                e->fin = (-1)*(bd[i][j-1]) - 2;
+                e->peso = bd[i][j];
+                e->i = i;
+                e->j = j;
+                adj_matrix->adj[e->ini] = insertUnsortedLinkedList(adj_matrix->adj[e->ini], e);
               }
             }
-          }   
+          }
+        }   
         //int** cost = (int**)malloc(z*sizeof(int*));
         /* for(i = 0; i< z; i++){
           cost[i] = (int*)malloc(z*sizeof(int));
         } */
-        int* distance = (int*)malloc(z*sizeof(int));
+
+        LinkedList *l;
+        edge *e;
+        for (i = 0; i < adj_matrix->V; i++){
+            l = adj_matrix->adj[i];
+
+            while (l!= NULL){
+                e = (edge *)getItemLinkedList(l);
+                printf( "%d:%d ", e->fin, e->peso);
+                l = l->next;
+            }
+
+            printf( "%d\n", (-1));
+        }
+
+        /* int* distance = (int*)malloc(z*sizeof(int));
         int* pred = (int*)malloc(z*sizeof(int));
-        int* visited = (int*)malloc(z*sizeof(int));
-        Dijkstra(adj_matrix, z, 0, distance, pred, visited);
-        
-        /*for(i = 0; i<z; i++){
-          for (j = 0; j<z; j++){
-            printf("%d ", adj_matrix[i][j]);
-          }
-          printf("\n");
-        }
-        printf("\n");
-        for(i = 0; i< z; i++){
-          printf("|%d", distance[i]);
-        }
-        printf("\n");*/
+        int* visited = (int*)malloc(z*sizeof(int)); */
+        //Dijkstra(adj_matrix, z, 0, distance, pred, visited);
+
+        void GRAPHpfs( adj_matrix,  s,  st,  wt);
 
 
-        int obj = bd[var_coord[0]-1][var_coord[1]-1];
-        obj = (-1)*obj - 2;
+        //!int obj = bd[var_coord[0]-1][var_coord[1]-1];
+        /* obj = (-1)*obj - 2;
         if(distance[obj] == -1){//verificar se objetivo é realmente um 0
           filePrint(-1, filename);
           for(j = 0; j<z; j++){
@@ -233,39 +223,40 @@ void createBoard(char *filename, int type){
           }
           free(visited);
           free(pred);
-          free(distance);
+          free(distance); */
          /*  for(i = 0; i< z; i++){
             free(cost[i]);
           }
           free(cost); */ 
+          freeG(adj_matrix);
           freeB(bd, size);
           continue;
-        }
+        //}
         //printf("custo: %d\n", distance[obj]);
-        filePrint(distance[obj], filename);
+       /*  filePrint(distance[obj], filename); */
         
-        i = obj;
+        /* i = obj;
         j = i;
         int count = 0;
         while(pred[i] != i){
           i = pred[i]; 
           j = i;         
           count++;
-        }
+        } */
         //printf("count: %d\n", count);
-        filePrint(count, filename);
+        /* filePrint(count, filename); */
 
 
-        int** vect = (int**)malloc(sizeof(int*)*count);
+        /* int** vect = (int**)malloc(sizeof(int*)*count);
         for(i = 0; i <count;i++){
           vect[i] = (int*)malloc(sizeof(int)*3);
         }
         count = 0;
-        i = obj;
+        i = obj; */
         //j = i;
         //int k;
-        LinkedList *list;
-        itemG *item;
+        /* LinkedList *list;
+        itemG *item; */
         /* for (k=0; k < adj_matrix->V; k++){
           list = adj_matrix->adj[k];
           item = getItemLinkedList(list);
@@ -276,7 +267,7 @@ void createBoard(char *filename, int type){
             list = getNextNodeLinkedList(list);
           }
         } */
-        while(pred[i] != i){
+        /* while(pred[i] != i){
           list = adj_matrix->adj[i];
           item = getItemLinkedList(list);
           i = pred[i];
@@ -294,35 +285,24 @@ void createBoard(char *filename, int type){
         }
         for(i = count - 1; i>=0; i--){
           filePrintV(vect[i][0],vect[i][1],vect[i][2], filename);
-        }
+        } */
 
 
 
-        for(i = 0; i <count;i++){
+        /* for(i = 0; i <count;i++){
           free(vect[i]);
-        }
-        free(vect);
+        } */
+        /* free(vect); */
         /* Freeeeeee */
-        free(visited);
+        /* free(visited);
         free(pred);
-        free(distance);
+        free(distance); */
         /* for(i = 0; i< z; i++){
           free(cost[i]);
         }
         free(cost); */
       }
     }
-    
-    //Print the board for testing
-    
-    /*for(i = 0; i<size[0]; i++){
-      for (j = 0; j<size[1]; j++){
-        printf("%d ", bd[i][j]);
-      }
-      printf("\n");
-    }
-    printf("\n");*/
-    
     
     freeB(bd, size);
 

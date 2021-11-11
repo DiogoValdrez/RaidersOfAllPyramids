@@ -125,7 +125,7 @@ graph* newG(int V)
   }
 
   for(i=0; i<V; i++){
-    new->adj[i] = initLinkedList();
+    new->adj[i] = NULL;
   }
   
   return new;

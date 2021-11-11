@@ -1,13 +1,10 @@
-#include<stdio.h>
-#include<stdlib.h>
-
 #include"LinkedList.h"
 
-struct LinkedListStruct
+/* struct LinkedListStruct
 {
     Item this;
     LinkedList *next;
-};
+}; */
 
 
 LinkedList * initLinkedList(void)

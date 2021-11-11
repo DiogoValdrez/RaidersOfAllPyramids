@@ -1,9 +1,14 @@
 #ifndef LinkedListHeader
 #define LinkedListHeader
+#include <stdio.h>
+#include <stdlib.h>
 
-#include "defs.h"
+typedef void *Item;
 
-typedef struct LinkedListStruct LinkedList;
+typedef struct LinkedList{
+    Item this;
+    struct LinkedList *next;
+}LinkedList;
 
 LinkedList * initLinkedList(void);
 

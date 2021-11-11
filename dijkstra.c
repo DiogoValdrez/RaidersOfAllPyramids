@@ -1,6 +1,6 @@
 #include "dijkstra.h"
 
-void Dijkstra(int **cost, int x, int start, int* distance, int* pred, int* visited) {//tirar os tart e por apenas 0
+/* void Dijkstra(int **cost, int x, int start, int* distance, int* pred, int* visited) {//tirar os tart e por apenas 0
     int count, mindistance, i, j;
     int nextnode = 0;
 
@@ -20,13 +20,13 @@ void Dijkstra(int **cost, int x, int start, int* distance, int* pred, int* visit
     visited[start] = 1;
     count = 1;
 
-    /* print da matriz de custos
+    //print da matriz de custos
     for (i = 0; i < x; i++){
         for (j = 0; j < x; j++){
             printf("%d ", cost[i][j]);
         }
         printf("\n");
-    }*/
+    }
 
     while (count < x - 1) {
         mindistance = INT_MAX;
@@ -58,17 +58,117 @@ void Dijkstra(int **cost, int x, int start, int* distance, int* pred, int* visit
         }
     }
 }
+ */
+
+#define P (wt[v] + ((edge *)getItemLinkedList(t))->peso)
+
+void GRAPHpfs(graph *G, int s, int *st, int *wt){
+  int v, w;
+  LinkedList *t;
+  edge *e;
+
+  PQinit(G->V);
+  for (v = 0; v < G->V; v++){
+    st[v] = -1;
+    wt[v] = INT_MAX;
+    PQinsert(v);
+  }
+  wt[s] = 0;
+  PQdec(s);
+  while (!IsEmpty()){
+    if (wt[v = PQdelmin()] != INT_MAX){//o pq del min é uma variação do max
+      for (t = G->adj[v]; t != NULL; t = t->next){
+        if (wt[w = (edge *)getItemLinkedList(t)] > P){
+          wt[w] = P;
+          PQdec(w);
+          st[w] = v;
+        }
+      }
+    }  
+  }
+}
 
 
 
 
+static Item *queue;//retirar isto, passar por referencia
+static int free;
+static int hsize;;
+//falta o exch
 
+void PQinit(int Size) {
+  queue = (Item *) malloc(Size * sizeof(Item));
+  hsize = Size; free = 0; 
+}
 
+void PQinsert(Item I){
+  if ((free+1) < hsize) {
+    queue[free] = I;
+    FixUp(queue, free);
+    free++;
+  }
+}
 
+bool IsEmpty() {
+  return free == 0 ? true : false;
+}
 
+Item PQdelmax() { 
+  /* troca maior elemento com último da tabela e reordena com FixDown */
+  exch(queue[0], queue[free-1]);
+  FixDown(queue, 0, free-1);
+  /* ultimo elemento não considerado na reordenação */
+  return queue[--free];
+}
 
+void PQsort(Item pTable[], int L, int R)
+{
+  int Aux;
+  PQinit(R-L+1);
+  for(Aux = L; Aux <= R; Aux++) PQinsert(pTable[Aux]);
+  for(Aux = R; Aux >= L; Aux--) pTable[Aux] = PQdelmax();
+}
 
-void swap(int *a, int *b) {
+void Heapsort(Item Table[], int L, int R)
+{
+  int Aux, Top = R;
+  /* Constroi acervo na própria tabela, executando FixDown na parte inferior */
+  for(Aux = (L+R-1)/2;
+  Aux >= L;
+  Aux--)
+  FixDown(Table, Aux, R);
+  /* Reordena a tabela, trocando o topo e exercendo FixDown na tabela com */
+  /* dimensão –1 (na troca, o menor é já colocado na posição final) */
+  while(Top > L){
+  exch(Table[L], Table[Top]);
+  FixDown(Table, L, --Top); }
+}
+
+void FixUp(Item Heap[], int Idx)
+{
+  while (Idx > 0 && lessPri(Heap[(Idx-1)/2], Heap[Idx])) {
+    exch(Heap[Idx], Heap[(Idx-1)/2]);
+    Idx = (Idx-1)/2;
+  }
+}
+void FixDown(Item Heap[], int Idx, int N) {
+  int Child; /* índice de um nó descendente */
+  while(2*Idx < N-1) { /* enquanto não chegar às folhas */
+    Child = 2*Idx+1;
+    /* Selecciona o maior descendente.
+    */
+    /* Nota: se índice Child é N-1, então só há um descendente */
+    if (Child < (N-1) && lessPri(Heap[Child], Heap[Child+1])) Child++;
+    if (!lessPri(Heap[Idx], Heap[Child])) break; /* condição acervo */
+    /* satisfeita
+    */
+    exch(Heap[Idx], Heap[Child]);
+    /* continua a descer a árvore */
+    Idx = Child;
+  }
+}
+
+/* void swap(int *a, int *b) {
   int temp = *b;
   *b = *a;
   *a = temp;
@@ -130,4 +230,4 @@ void printArray(int array[], int size) {
   for (int i = 0; i < size; ++i)
     printf("%d ", array[i]);
   printf("\n");
-}
+} */
