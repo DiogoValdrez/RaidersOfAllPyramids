@@ -60,12 +60,19 @@
 }
  */
 
-#define P (wt[v] + ((edge *)getItemLinkedList(t))->peso)
+
+
+
+static int *queue;//retirar isto, passar por referencia
+static int free_;
+static int hsize;
+//falta o LessPri
+
+
 
 void GRAPHpfs(graph *G, int s, int *st, int *wt){
   int v, w;
   LinkedList *t;
-  edge *e;
 
   PQinit(G->V);
   for (v = 0; v < G->V; v++){
@@ -74,95 +81,125 @@ void GRAPHpfs(graph *G, int s, int *st, int *wt){
     PQinsert(v);
   }
   wt[s] = 0;
-  PQdec(s);
+  st[s] = 0;
+  //FixDown(queue, G->V, s, wt);
+  FixUp(queue, G->V - 1, wt);//PQdec
   while (!IsEmpty()){
-    if (wt[v = PQdelmin()] != INT_MAX){//o pq del min é uma variação do max
-      for (t = G->adj[v]; t != NULL; t = t->next){
-        if (wt[w = (edge *)getItemLinkedList(t)] > P){
-          wt[w] = P;
-          PQdec(w);
-          st[w] = v;
+    //!printf("||%d", wt[0]);
+    int ajuda = PQdelmin(wt);
+    //!printf(",%d\n", wt[0]);
+    //printf("||%d,%d||", ajuda, free_);
+    if (wt[v = ajuda] != INT_MAX){//o pq del min é uma variação do max
+      for(v = 0; v < G->V; v++){
+        for (t = G->adj[v]; t != NULL; t = t->next){
+          //!printf("p%d|", (wt[v] + ((edge *)getItemLinkedList(t))->peso));
+          //!printf("%d\n", wt[w = ((edge *)getItemLinkedList(t))->fin]);
+          if (wt[w = ((edge *)getItemLinkedList(t))->fin] > (wt[v] + ((edge *)getItemLinkedList(t))->peso)){//trocar para in se der problemas
+            //!printf("wowwww\n");
+            wt[w] = (wt[v] + ((edge *)getItemLinkedList(t))->peso);
+            FixDown(queue, w, free_, wt);//PQdec
+            //FixUp(queue, w, wt);
+            //printf("|||%d", wt[0]);
+            st[w] = v;
+          }
         }
-      }
+      }     
     }  
   }
+  free(queue);
 }
 
 
 
 
-static Item *queue;//retirar isto, passar por referencia
-static int free;
-static int hsize;;
-//falta o exch
+
 
 void PQinit(int Size) {
-  queue = (Item *) malloc(Size * sizeof(Item));
-  hsize = Size; free = 0; 
+  queue = (int *) malloc(Size * sizeof(int));
+  hsize = Size; free_ = 0; 
+}
+void exch(int* q1, int* q2){
+  int temp = *q1;
+  //printf("tt%d,%d", *q1, *q2);
+  *q1 = *q2;
+  *q2 = temp;
+  //printf("!%d,%dtt\n", *q1, *q2);
 }
 
-void PQinsert(Item I){
-  if ((free+1) < hsize) {
-    queue[free] = I;
-    FixUp(queue, free);
-    free++;
+bool lessPri(int i1, int i2, int* wt){//abstração, ITEM
+  if(wt[i1] > wt[i2]){
+    return true;
+  }else{
+    return false;
+  }  
+}
+
+void PQinsert(int I){//mudei
+  if ((free_+1) < hsize) {
+    queue[free_] = I;
+    //FixUp(queue, free_);//pode n ser preciso
+    free_++;
   }
 }
 
 bool IsEmpty() {
-  return free == 0 ? true : false;
+  return free_ == 0 ? true : false;
 }
 
-Item PQdelmax() { 
-  /* troca maior elemento com último da tabela e reordena com FixDown */
-  exch(queue[0], queue[free-1]);
-  FixDown(queue, 0, free-1);
-  /* ultimo elemento não considerado na reordenação */
-  return queue[--free];
+int PQdelmin(int* wt) { //mudei isto bue
+  printf("||%d, %d\n", wt[queue[0]], wt[queue[free_ -1]]);
+  exch(&(queue[0]), &(queue[free_-1]));
+  printf("||%d, %d\n", wt[queue[0]], wt[queue[free_ -1]]);
+  FixDown(queue,0,free_-1, wt);
+  /* printf("free\n\n\n");
+  for(int i=0;i<free_;i++){
+    printf("%d, %d\n", queue[i], wt[i]);
+  }
+  printf("\n");*/
+  return queue[--free_]; 
 }
 
-void PQsort(Item pTable[], int L, int R)
+/* void PQsort(Item pTable[], int L, int R)
 {
   int Aux;
   PQinit(R-L+1);
   for(Aux = L; Aux <= R; Aux++) PQinsert(pTable[Aux]);
   for(Aux = R; Aux >= L; Aux--) pTable[Aux] = PQdelmax();
-}
+} */
 
-void Heapsort(Item Table[], int L, int R)
+/* void Heapsort(Item Table[], int L, int R)
 {
   int Aux, Top = R;
-  /* Constroi acervo na própria tabela, executando FixDown na parte inferior */
+  
   for(Aux = (L+R-1)/2;
   Aux >= L;
   Aux--)
   FixDown(Table, Aux, R);
-  /* Reordena a tabela, trocando o topo e exercendo FixDown na tabela com */
-  /* dimensão –1 (na troca, o menor é já colocado na posição final) */
+  
   while(Top > L){
   exch(Table[L], Table[Top]);
   FixDown(Table, L, --Top); }
-}
+} */
 
-void FixUp(Item Heap[], int Idx)
+void FixUp(int Heap[], int Idx, int* wt)
 {
-  while (Idx > 0 && lessPri(Heap[(Idx-1)/2], Heap[Idx])) {
-    exch(Heap[Idx], Heap[(Idx-1)/2]);
+  while (Idx > 0 && lessPri(Heap[(Idx-1)/2], Heap[Idx], wt)) {
+    exch(&(Heap[Idx]), &(Heap[(Idx-1)/2]));
     Idx = (Idx-1)/2;
   }
 }
-void FixDown(Item Heap[], int Idx, int N) {
+void FixDown(int Heap[], int Idx, int N, int* wt) {
   int Child; /* índice de um nó descendente */
   while(2*Idx < N-1) { /* enquanto não chegar às folhas */
     Child = 2*Idx+1;
     /* Selecciona o maior descendente.
     */
     /* Nota: se índice Child é N-1, então só há um descendente */
-    if (Child < (N-1) && lessPri(Heap[Child], Heap[Child+1])) Child++;
-    if (!lessPri(Heap[Idx], Heap[Child])) break; /* condição acervo */
+    if (Child < (N-1) && lessPri(Heap[Child],Heap[Child+1], wt)) Child++;
+    if (!lessPri(Heap[Idx], Heap[Child], wt)) break; /* condição acervo */
     /* satisfeita
     */
-    exch(Heap[Idx], Heap[Child]);
+    exch(&(Heap[Idx]), &(Heap[Child]));
     /* continua a descer a árvore */
     Idx = Child;
   }

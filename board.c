@@ -150,7 +150,7 @@ void createBoard(char *filename, int type){
         for (i=0;i<size[0]; i++){
           for (j= 0; j<size[1]; j++){
             if (bd[i][j] > 0){
-              if(i-1>=0 && i+1<size[0] && bd[i-1][j]<-1 && bd[i+1][j]<-1){ 
+              if(i-1>=0 && i+1<size[0] && bd[i-1][j]<-1 && bd[i+1][j]<-1){
                 e = (edge*)malloc(sizeof(edge));
                 e->ini = (-1)*(bd[i-1][j]) - 2;
                 e->fin = (-1)*(bd[i+1][j]) - 2;
@@ -206,24 +206,25 @@ void createBoard(char *filename, int type){
             printf( "%d\n", (-1));
         }
 
-        /* int* distance = (int*)malloc(z*sizeof(int));
-        int* pred = (int*)malloc(z*sizeof(int));
-        int* visited = (int*)malloc(z*sizeof(int)); */
-        //Dijkstra(adj_matrix, z, 0, distance, pred, visited);
+        int* visited = (int*)malloc(z*sizeof(int));
+        int* dist = (int*)malloc(z*sizeof(int));
+        //int* pred = (int*)malloc(z*sizeof(int));
+        GRAPHpfs(adj_matrix, 0, visited, dist);
+        for(i = 0; i<z; i++){
+          printf( "%d\n", visited[i]);
+        } 
 
-        void GRAPHpfs( adj_matrix,  s,  st,  wt);
 
-
-        //!int obj = bd[var_coord[0]-1][var_coord[1]-1];
-        /* obj = (-1)*obj - 2;
-        if(distance[obj] == -1){//verificar se objetivo é realmente um 0
+        int obj = bd[var_coord[0]-1][var_coord[1]-1];//pode se meter isto na estrutura
+        obj = (-1)*obj - 2;
+        if(dist[obj] == -1){//verificar se objetivo é realmente um 0
           filePrint(-1, filename);
-          for(j = 0; j<z; j++){
+          /* for(j = 0; j<z; j++){
             //free
-          }
-          free(visited);
-          free(pred);
-          free(distance); */
+          } */
+          //free(visited);
+          //!free(pred);
+          free(dist);
          /*  for(i = 0; i< z; i++){
             free(cost[i]);
           }
@@ -231,72 +232,73 @@ void createBoard(char *filename, int type){
           freeG(adj_matrix);
           freeB(bd, size);
           continue;
-        //}
-        //printf("custo: %d\n", distance[obj]);
-       /*  filePrint(distance[obj], filename); */
+        }
+        //printf("custo: %d\n", dist[obj]);
+        filePrint(dist[obj], filename);
         
-        /* i = obj;
+        i = obj;
         j = i;
         int count = 0;
-        while(pred[i] != i){
-          i = pred[i]; 
+        while(visited[i] != i){
+          i = visited[i]; 
           j = i;         
           count++;
-        } */
-        //printf("count: %d\n", count);
-        /* filePrint(count, filename); */
+        } 
+        printf("count: %d\n", count);
+        filePrint(count, filename);
 
 
-        /* int** vect = (int**)malloc(sizeof(int*)*count);
+        int** vect = (int**)malloc(sizeof(int*)*count);
         for(i = 0; i <count;i++){
           vect[i] = (int*)malloc(sizeof(int)*3);
         }
         count = 0;
-        i = obj; */
-        //j = i;
-        //int k;
-        /* LinkedList *list;
-        itemG *item; */
+        i = obj;
+        j = i;
+        int k;
+        LinkedList *list;
+        edge *item;
         /* for (k=0; k < adj_matrix->V; k++){
           list = adj_matrix->adj[k];
-          item = getItemLinkedList(list);
+          item = (edge*)getItemLinkedList(list);
           while (list != NULL) {
-            vect[][0] = item->i + 1;
-            vect[count][1] = item->j + 1;
+            vect[count][0] = item->i;
+            vect[count][1] = item->j;
             vect[count][2] = item->peso;
-            list = getNextNodeLinkedList(list);
+            list = list->next;
           }
-        } */
-        /* while(pred[i] != i){
+        }  */
+        while(visited[i] != i){
           list = adj_matrix->adj[i];
-          item = getItemLinkedList(list);
-          i = pred[i];
+          item = (edge*)getItemLinkedList(list);
+          i = visited[i];
           //printf("|%d %d %d\n", adj_matrix_coord[i][j].height + 1,adj_matrix_coord[i][j].width + 1, adj_matrix[i][j]);
-          while ( item->dest != i)
+          while ( item->fin != i)
           {
-            list = getNextNodeLinkedList(list);
-            item = getItemLinkedList(list);
+            list = list->next;
+            item = (edge*)getItemLinkedList(list);
           }
-
-          vect[count][0] = item->i;
-          vect[count][1] = item->j;
+        
+          vect[count][0] = item->i + 1;
+          vect[count][1] = item->j + 1;
           vect[count][2] = item->peso;    
           count++;     
         }
         for(i = count - 1; i>=0; i--){
           filePrintV(vect[i][0],vect[i][1],vect[i][2], filename);
-        } */
+        } 
+ 
 
 
-
-        /* for(i = 0; i <count;i++){
+        for(i = 0; i <count;i++){
           free(vect[i]);
-        } */
-        /* free(vect); */
+        }
+        free(vect); 
         /* Freeeeeee */
-        /* free(visited);
-        free(pred);
-        free(distance); */
+        free(visited);
+        //free(pred);
+        free(dist);
+        freeG(adj_matrix);
         /* for(i = 0; i< z; i++){
           free(cost[i]);
         }

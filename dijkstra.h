@@ -17,13 +17,15 @@ void deleteRoot(int array[], int num, int size);
 void printArray(int array[], int size); */
 
 void PQinit(int);
+void exch(int*, int*);
 bool IsEmpty();
-void PQinsert(Item);
-Item PQdelmax();
-void PQsort(Item pTable[], int L, int R);
-void Heapsort(Item Table[], int L, int R);
-void FixUp(Item Heap[], int Idx);
-void FixDown(Item Heap[], int Idx, int N);
+void PQinsert(int);
+int PQdelmin(int* wt);
+bool lessPri(int i1, int i2, int *wt);
+void PQsort(int pTable[], int L, int R);
+void Heapsort(int Table[], int L, int R);
+void FixUp(int Heap[], int Idx, int* wt);
+void FixDown(int Heap[], int Idx, int N, int* wt);
 
 
 #endif
