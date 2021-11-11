@@ -131,7 +131,41 @@ graph* newG(int V)
   return new;
 }
 
-
+void check_adj(graph* adj_matrix, edge* e)
+{
+  LinkedList *list;
+  if ( adj_matrix->adj[e->ini] == NULL)
+  {
+    adj_matrix->adj[e->ini] = insertUnsortedLinkedList(adj_matrix->adj[e->ini], e);
+    return;
+  }
+  list= adj_matrix->adj[e->ini];
+  edge *item = (edge*)getItemLinkedList(list);
+  if (item == NULL)
+  {
+    adj_matrix->adj[e->ini] = insertUnsortedLinkedList(adj_matrix->adj[e->ini], e);
+    return;
+  } 
+  
+  while(item->fin != e->fin)
+  {
+    if (list->next == NULL)
+    {
+      adj_matrix->adj[e->ini] = insertUnsortedLinkedList(adj_matrix->adj[e->ini], e);
+      return;
+    }
+    list = list->next;
+    item = (edge*)getItemLinkedList(list);
+  }
+  
+   if (e->peso < item->peso && e->fin == item->fin)
+  {
+    item->peso = e->peso;
+    item->i = e->i;
+    item->j = e->j;
+  } 
+  return; 
+}
 
 void AddG( graph *Graph, edge *Edge)
 {

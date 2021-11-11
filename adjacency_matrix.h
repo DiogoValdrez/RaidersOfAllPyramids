@@ -40,6 +40,7 @@ void AddG ( graph* , edge* );
 void freeG (graph*);
 void printG ( graph* , FILE*);
 void printRec(LinkedList *, FILE *);
+void check_adj(graph* adj_matrix, edge* e);
 
 
 #endif

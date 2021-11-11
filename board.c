@@ -157,7 +157,7 @@ void createBoard(char *filename, int type){
                 e->peso = bd[i][j];
                 e->i = i;
                 e->j = j;
-                adj_matrix->adj[e->ini] = insertUnsortedLinkedList(adj_matrix->adj[e->ini], e);
+                check_adj(adj_matrix, e);
 
                 e = (edge*)malloc(sizeof(edge));
                 e->ini = (-1)*(bd[i+1][j]) - 2;
@@ -165,7 +165,7 @@ void createBoard(char *filename, int type){
                 e->peso = bd[i][j];
                 e->i = i;
                 e->j = j;
-                adj_matrix->adj[e->ini] = insertUnsortedLinkedList(adj_matrix->adj[e->ini], e);
+                check_adj(adj_matrix, e);
               }
               if(j-1>=0 && j+1<size[1]&& bd[i][j+1]<-1 && bd[i][j-1]<-1){
                 e = (edge*)malloc(sizeof(edge));
@@ -174,7 +174,7 @@ void createBoard(char *filename, int type){
                 e->peso = bd[i][j];
                 e->i = i;
                 e->j = j;
-                adj_matrix->adj[e->ini] = insertUnsortedLinkedList(adj_matrix->adj[e->ini], e);
+                check_adj(adj_matrix, e);
 
                 e = (edge*)malloc(sizeof(edge));
                 e->ini = (-1)*(bd[i][j+1]) - 2;
@@ -182,7 +182,7 @@ void createBoard(char *filename, int type){
                 e->peso = bd[i][j];
                 e->i = i;
                 e->j = j;
-                adj_matrix->adj[e->ini] = insertUnsortedLinkedList(adj_matrix->adj[e->ini], e);
+                check_adj(adj_matrix, e);
               }
             }
           }
@@ -194,7 +194,7 @@ void createBoard(char *filename, int type){
 
         LinkedList *l;
         edge *e;
-        for (i = 0; i < adj_matrix->V; i++){
+        /* for (i = 0; i < adj_matrix->V; i++){
             l = adj_matrix->adj[i];
 
             while (l!= NULL){
@@ -204,15 +204,15 @@ void createBoard(char *filename, int type){
             }
 
             printf( "%d\n", (-1));
-        }
+        } */
 
         int* visited = (int*)malloc(z*sizeof(int));
         int* dist = (int*)malloc(z*sizeof(int));
         //int* pred = (int*)malloc(z*sizeof(int));
         GRAPHpfs(adj_matrix, 0, visited, dist);
-        for(i = 0; i<z; i++){
+        /* for(i = 0; i<z; i++){
           printf( "%d\n", visited[i]);
-        } 
+        }  */
 
 
         int obj = bd[var_coord[0]-1][var_coord[1]-1];//pode se meter isto na estrutura
