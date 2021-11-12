@@ -210,14 +210,14 @@ void createBoard(char *filename, int type){
         int* dist = (int*)malloc(z*sizeof(int));
         //int* pred = (int*)malloc(z*sizeof(int));
         GRAPHpfs(adj_matrix, 0, visited, dist);
-        for(i = 0; i<z; i++){
+        /* for(i = 0; i<z; i++){
           printf( "%d\n", visited[i]);
-        } 
+        }  */
 
 
         int obj = bd[var_coord[0]-1][var_coord[1]-1];//pode se meter isto na estrutura
         obj = (-1)*obj - 2;
-        if(dist[obj] == -1){//verificar se objetivo é realmente um 0
+        if(dist[obj] == -1 || dist[obj] == INT_MAX){//verificar se objetivo é realmente um 0
           filePrint(-1, filename);
           /* for(j = 0; j<z; j++){
             //free
@@ -244,7 +244,7 @@ void createBoard(char *filename, int type){
           j = i;         
           count++;
         } 
-        printf("count: %d\n", count);
+        //printf("count: %d\n", count);
         filePrint(count, filename);
 
 

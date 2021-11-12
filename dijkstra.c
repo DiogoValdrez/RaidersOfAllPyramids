@@ -91,11 +91,11 @@ void GRAPHpfs(graph *G, int s, int *st, int* wt){
           if (wt[w = ((edge *)getItemLinkedList(t))->fin] > (wt[v] + ((edge *)getItemLinkedList(t))->peso)){
             if((wt[v] + ((edge *)getItemLinkedList(t))->peso) > 0 )
             {if(w == 0){
-              printf("%d why00\n", wt[w]);
+              //printf("%d why00\n", wt[w]);
             }
             wt[w] = (wt[v] + ((edge *)getItemLinkedList(t))->peso);
             if(w == 0){
-              printf("%d why2\n", wt[w]);
+              //printf("%d why2\n", wt[w]);
             }
             FixDown(queue, w, free_, wt);
             st[w] = v;}
