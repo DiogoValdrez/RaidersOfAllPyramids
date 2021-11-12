@@ -222,7 +222,7 @@ void createBoard(char *filename, int type){
           /* for(j = 0; j<z; j++){
             //free
           } */
-          //free(visited);
+          free(visited);
           //!free(pred);
           free(dist);
          /*  for(i = 0; i< z; i++){
