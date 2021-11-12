@@ -21,12 +21,5 @@ LinkedList * getNextNodeLinkedList(LinkedList * node);
 Item getItemLinkedList(LinkedList * node);
 
 LinkedList * insertUnsortedLinkedList(LinkedList * next, Item this);
-
-LinkedList * insertSortedLinkedList(LinkedList * first,
-                           Item item,
-                           int (* comparisonItemFnt)
-                           (Item item1, Item item2),
-                           int * err);
-
            
 #endif

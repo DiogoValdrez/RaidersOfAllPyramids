@@ -331,30 +331,7 @@ int Variant5(int *var_coord, int **bd, int *size){
 }
 
 
-/*
- *  Function:
- *    Variant6
- *
- *  Description:
- *    Variant A6 - if both cells are white, identify if they belong to the same room
- *
- *  Arguments:
- *    Pointer to an array that holds the coordenates of the first cell;
- *    Double pointer to a table that holds the board;
- *    Pointer to an array that olds the size of the board;
- *    Pointer to an array that holds the coordenates of the second cell;
- *
- *
- *  Return value:
- *    Int - answer to the variant A6:
- *       0 if it is a negative answer;
- *       1 if it is a positive answer;
- *
- *  Other information:
- *    if the cell is out of bounds value of the variant answer is -2, but that check is made before the function is called;
- *    if one of the cells isnt white the value of the variant answer is -2, but that check is made before the function is called;
- *
- */
+
 
 
 

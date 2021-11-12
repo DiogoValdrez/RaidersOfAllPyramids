@@ -103,36 +103,3 @@ void freeG( graph *Graph)
   free(Graph);
   return;
 }
-
-
-
-void printG( graph *Graph , FILE *fp )
-{
-  int i;
-  LinkedList *list;
-
-  fprintf( fp, "%d\n", Graph->V );
-
-  for( i=0; i < Graph->V; i++ ) {
-    list = Graph->adj[i];
- 
-    if(list!=NULL)
-      printRec(list, fp);
-
-    fprintf( fp, "-1 \n");
-   }
-} 
-
-void printRec(LinkedList *aux, FILE *fp)
-{
-  itemG *i;
-  LinkedList *new;
-  
-  i = getItemLinkedList(aux);
-  new = getNextNodeLinkedList(aux);
-  if(new!=NULL){
-    printRec(new, fp);
-  }
-  fprintf(fp, "%d:%d ", i->dest, i->peso);
-
-}

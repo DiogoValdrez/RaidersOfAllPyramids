@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS= -Wall -std=c99 -g
+CFLAGS= -Wall -std=c99 -O3
 
 PROJECT= roap
 

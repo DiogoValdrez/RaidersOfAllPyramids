@@ -6,15 +6,6 @@
 #include <limits.h>
 #include "LinkedList.h"
 
-
-/* typedef struct Coordinates {
-    int height;
-    int width;
-}Coordinates; */
-/* int **create_adj_matrix(int **bd, int *size, int **adj_matrix, int x, Coordinates **adj_matrix_coord);
-void new_edge(int **adj_matrix, int vert1, int vert2, int weight, Coordinates **adj_matrix_coord, int height, int width);
-void free_adj_matrix(int **adj_matrix, int x); */
-
 typedef struct _edge{
     int peso;
     int ini;
@@ -38,8 +29,6 @@ typedef struct _itemG{
 graph* newG(int V);
 void AddG ( graph* , edge* );
 void freeG (graph*);
-void printG ( graph* , FILE*);
-void printRec(LinkedList *, FILE *);
 void check_adj(graph* adj_matrix, edge* e);
 
 

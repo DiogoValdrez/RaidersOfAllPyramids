@@ -107,6 +107,7 @@ void createBoard(char *filename, int type){
     }
     if(type){
       decideVar(filename, varia, var_coord, bd, size, varia6, type);
+      freeB(bd, size);
     }else{
       //ver se é realmente necessário isto da variante 5
       int xy[2];
@@ -136,7 +137,7 @@ void createBoard(char *filename, int type){
       if(found != 1){
         int z = (-1)*x - 1;
 
-
+        int obj = bd[var_coord[0]-1][var_coord[1]-1];//pode se meter isto na estrutura
 
         adj_matrix = newG(z);
 
@@ -195,18 +196,17 @@ void createBoard(char *filename, int type){
               }
             }
           }
-        }   
+        }
+        freeB(bd, size);
         int *visited;
         int *dist;
         if( (visited = (int*)malloc(z*sizeof(int)))==NULL){
           freeG(adj_matrix);
-          freeB(bd, size);
           exit(0);
         }
         if((dist = (int*)malloc(z*sizeof(int)))==NULL){
           free(visited);
           freeG(adj_matrix);
-          freeB(bd, size);
           exit(0);
         }
 
@@ -214,14 +214,13 @@ void createBoard(char *filename, int type){
         Dijkstra(adj_matrix, 0, visited, dist);
 
 
-        int obj = bd[var_coord[0]-1][var_coord[1]-1];//pode se meter isto na estrutura
+        
         obj = (-1)*obj - 2;
         if(dist[obj] == -1 || dist[obj] == INT_MAX){//verificar se objetivo é realmente um 0
           filePrint(-1, filename);
           free(visited);
           free(dist);
           freeG(adj_matrix);
-          freeB(bd, size);
           continue;
         }
         filePrint(dist[obj], filename);
@@ -242,7 +241,6 @@ void createBoard(char *filename, int type){
           free(visited);
           free(dist);
           freeG(adj_matrix);
-          freeB(bd, size);
           exit(0);
         }
         for(i = 0; i <count;i++){
@@ -255,7 +253,6 @@ void createBoard(char *filename, int type){
           free(visited);
           free(dist);
           freeG(adj_matrix);
-          freeB(bd, size);
           exit(0);
           }
         }
@@ -299,9 +296,6 @@ void createBoard(char *filename, int type){
         
       }
     }
-    
-    freeB(bd, size);
-
   }while(fscanf(fp, "%d" , size)==1);
   fclose(fp);
   return;
