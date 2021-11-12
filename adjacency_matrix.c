@@ -48,6 +48,7 @@ void check_adj(graph* adj_matrix, edge* e)
     item->i = e->i;
     item->j = e->j;
     free(e);
+    return;
   } 
   free(e);
   return; 
