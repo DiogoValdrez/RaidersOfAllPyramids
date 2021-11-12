@@ -66,7 +66,10 @@ LinkedList *insertUnsortedLinkedList(LinkedList *next, Item this)
     LinkedList *new;
 
     /* Memory allocation */
-    new = (LinkedList *) malloc(sizeof(LinkedList));
+    if ((new = (LinkedList *) malloc(sizeof(LinkedList))) == NULL)
+    {
+        exit(0);
+    }
 
     /* Check memory allocation errors */
     if(new == NULL)
@@ -89,7 +92,10 @@ LinkedList * insertSortedLinkedList(LinkedList *first,
     LinkedList  *new, *aux;
 
     /* alloc and check */
-    new = (LinkedList *) malloc(sizeof(LinkedList));
+    if ((new = (LinkedList *) malloc(sizeof(LinkedList))) == NULL)
+    {
+        exit(0);
+    }
     if(new == NULL)
         return NULL;
     

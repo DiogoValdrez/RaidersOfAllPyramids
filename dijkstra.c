@@ -63,10 +63,15 @@
 
 
 
-void GRAPHpfs(graph *G, int s, int *st, int* wt){
+void Dijkstra(graph *G, int s, int *st, int* wt){
   int hsize = G->V;
   int free_= 0;
-  int *queue = (int *) malloc(G->V * sizeof(int));
+  int *queue;
+  if((queue = (int *) malloc(G->V * sizeof(int))) == NULL)
+  {
+    freeG(G);
+    exit(0);
+  }
   int v, w;
   LinkedList *t;
   //printf("G->v : %d\n", G->V);
@@ -115,7 +120,9 @@ void GRAPHpfs(graph *G, int s, int *st, int* wt){
 
 
 void PQinit(int Size, int* queue, int* free_, int hsize) {
-  queue = (int *) malloc(Size * sizeof(int));
+  if((queue = (int *) malloc(Size * sizeof(int)))==NULL){
+    exit(0);
+  }
   hsize = Size; *free_ = 0; 
 }
 void exch(int* q1, int* q2){

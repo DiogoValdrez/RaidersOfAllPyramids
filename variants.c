@@ -360,7 +360,11 @@ int Variant5(int *var_coord, int **bd, int *size){
 
 queue* createQueue()
 {
-    queue* q = (queue*)malloc(sizeof(queue));
+    queue* q;
+    if((q = (queue*)malloc(sizeof(queue))) == NULL)
+    {
+        exit(0);
+    }
     q->head = NULL;
     q->last = -1;
     return q;
@@ -377,7 +381,11 @@ int queue_Empty(queue* q)
 }
 node* createNode(int i, int j)
 {
-    node *no = (node*)malloc(sizeof(node));
+    node *no;
+    if((no = (node*)malloc(sizeof(node))) == NULL)
+    {
+        exit(0);
+    }
     no->size[0] = i;
     no->size[1] = j;
     no->next_node = NULL;
@@ -397,9 +405,6 @@ node* takeNodefromList(queue* q)
     node *no = q->head;
     q->head = no->next_node;
     q->last--;
-    /* int *sz = (int*)malloc(sizeof(int)*2);
-    sz[0]= no->size[0];
-    sz[1]= no->size[1]; */
     return no;
 }
 
