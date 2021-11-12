@@ -39,7 +39,7 @@ void Dijkstra(graph *G, int s, int *st, int* wt){
   while (!IsEmpty(free_)){
     int ajuda = PQdelmin(wt, queue, &free_);
     if (wt[v = ajuda] != INT_MAX){
-      for(v = 0; v < G->V; v++){
+      for(v = ajuda; v < G->V; v++){
         for (t = G->adj[v]; t != NULL; t = t->next){
           if (wt[w = ((edge *)getItemLinkedList(t))->fin] > (wt[v] + ((edge *)getItemLinkedList(t))->peso)){
             if((wt[v] + ((edge *)getItemLinkedList(t))->peso) > 0 )
