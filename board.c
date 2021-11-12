@@ -117,6 +117,7 @@ void createBoard(char *filename, int type){
         found = 1;
         filePrint(-1, filename);
       }
+      //Change the values of each room 
       int x = -1;
       for(i = 1; i<=size[0]; i++){
         for(j = 1; j<=size[1]; j++){
@@ -128,8 +129,7 @@ void createBoard(char *filename, int type){
           }
         }
       }
-
-      //talvez este check possa ser feito mais cedo
+      //check if goal is the same as start
       if(bd[0][0] == bd[var_coord[0]-1][var_coord[1]-1]){
         found = 1;
         filePrint(0, filename);
@@ -139,8 +139,8 @@ void createBoard(char *filename, int type){
 
         int obj = bd[var_coord[0]-1][var_coord[1]-1];//pode se meter isto na estrutura
 
+        //Adjacency List 
         adj_matrix = newG(z);
-
         for (i=0;i<size[0]; i++){
           for (j= 0; j<size[1]; j++){
             if (bd[i][j] > 0){

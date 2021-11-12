@@ -1,30 +1,19 @@
 #include "adjacency_matrix.h"
 
-
-graph* newG(int V)
-{
-  graph *new;
-  int i;
-
-  if((new= (graph*)malloc(sizeof(graph)))==NULL){
-      printf("Memory allocation failure\n");
-      exit(1);
-  }
-  
-  new->V=V;
-  //new->E=0;
-
-  if((new->adj= (LinkedList**) malloc( V * sizeof(LinkedList*)))==NULL){
-      printf("Memory allocation failure\n");
-      exit(1);
-  }
-
-  for(i=0; i<V; i++){
-    new->adj[i] = NULL;
-  }
-  
-  return new;
-}
+/*
+ *  Function:
+ *    check_Adj
+ *
+ *  Description:
+ *    Inserts the given edge in the adjacent list
+ *  Arguments:
+ *    graph* of the adjacent list;
+ *    edge* of the edge to be inserted;
+ *
+ *  Return value:
+ *    graph of adjacency list;
+ *          
+ */
 
 void check_adj(graph* adj_matrix, edge* e)
 {
@@ -62,6 +51,40 @@ void check_adj(graph* adj_matrix, edge* e)
   return; 
 }
 
+/*
+ *  Function:
+ *    newG;
+ *    addG;
+ *    freeG;
+ *
+ *  Description:
+ *    AdjacencyList related functions;   
+ * 
+ */
+graph* newG(int V)
+{
+  graph *new;
+  int i;
+
+  if((new= (graph*)malloc(sizeof(graph)))==NULL){
+      printf("Memory allocation failure\n");
+      exit(1);
+  }
+  
+  new->V=V;
+
+  if((new->adj= (LinkedList**) malloc( V * sizeof(LinkedList*)))==NULL){
+      printf("Memory allocation failure\n");
+      exit(1);
+  }
+
+  for(i=0; i<V; i++){
+    new->adj[i] = NULL;
+  }
+  
+  return new;
+}
+
 void AddG( graph *Graph, edge *Edge)
 {
   itemG *new;
@@ -92,12 +115,11 @@ void AddG( graph *Graph, edge *Edge)
   return;
 }
 
-
 void freeG( graph *Graph)
 {
   int i;
   for( i=0; i<Graph->V ; i++) {
-    freeLinkedList (Graph->adj[i], free);//!ver aqui o free se esta bem
+    freeLinkedList (Graph->adj[i], free);
   }  
   free(Graph->adj);
   free(Graph);

@@ -331,10 +331,18 @@ int Variant5(int *var_coord, int **bd, int *size){
 }
 
 
-
-
-
-
+/*
+ *  Function:
+ *    createQueue;
+ *    queue_Empty;
+ *    createNode;
+ *    addNodetoList;
+ *    takeNodefromList
+ *
+ *  Description:
+ *    queue related functions;
+ *          
+ */
 queue* createQueue()
 {
     queue* q;
@@ -385,6 +393,23 @@ node* takeNodefromList(queue* q)
     return no;
 }
 
+/*
+ *  Function:
+ *    add_mark_adjacents
+ *
+ *  Description:
+ *    adds the adjacent of the given node to a queue and marks with the respective flag
+ *  Arguments:
+ *    int **bd of the board;
+ *    node *no;
+ *    queue *q;
+ *    int *size coordenates of the node;
+ *    int flag with which is supposed to substitute the values of the room
+ *
+ *  Return value:
+ *    void;
+ *          
+ */
 void add_mark_adjacents(int **bd, node *no, queue *q, int *size, int flag)
 {
     //Matrix 1xY
@@ -611,6 +636,26 @@ void add_mark_adjacents(int **bd, node *no, queue *q, int *size, int flag)
     return;
 }
 
+/*
+ *  Function:
+ *    Variant6
+ *
+ *  Description:
+ *    Implements variant6 with BFS
+ *  Arguments:
+ *    int *var_coord coordenates given;
+ *    int **bd board;
+ *    int *size size of board;
+ *    int *obj coordenates of objective;
+ *    int flag to cheange rooms;
+ *    int type;
+ *
+ *  Return value:
+ *    int answer to variant6;
+ *    0 if it is a negative answer;
+ *    1 if it is a positive answer;
+ *          
+ */
 int Variant6(int *var_coord, int **bd, int *size, int *obj, int flag, int type){
     if((bd[var_coord[0]-1][var_coord[1]-1] != 0) || ((bd[obj[0]-1][obj[1]-1] != 0) && type == 1)){
         return 0;

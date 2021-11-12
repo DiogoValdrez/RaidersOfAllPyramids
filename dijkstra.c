@@ -1,5 +1,21 @@
 #include "dijkstra.h"
 
+/*
+ *  Function:
+ *    Dijkstra
+ *
+ *  Description:
+ *    Implements the dijkstra algorithm to find the shortest path to all points
+ *  Arguments:
+ *    graph* of the adjacent list;
+ *    int s source node;
+ *    Int *st vector that stores from where the nodes came;
+ *    Int *wt vector that stores the minimum distance between source and every other node
+ *
+ *  Return value:
+ *    void;
+ *          
+ */
 void Dijkstra(graph *G, int s, int *st, int* wt){
   int hsize = G->V;
   int free_= 0;
@@ -41,9 +57,21 @@ void Dijkstra(graph *G, int s, int *st, int* wt){
 }
 
 
-
-
-
+/*
+ *  Function:
+ *    PQinit
+ *    exch
+ *    lessPri
+ *    PQinsert
+ *    IsEmpt
+ *    PQdelmin
+ *    FixUp
+ *    FixDown
+ *
+ *  Description:
+ *    functions that help in dijkstra algorithm implementation
+ *  
+ */
 
 void PQinit(int Size, int* queue, int* free_, int hsize) {
   if((queue = (int *) malloc(Size * sizeof(int)))==NULL){
@@ -51,6 +79,7 @@ void PQinit(int Size, int* queue, int* free_, int hsize) {
   }
   hsize = Size; *free_ = 0; 
 }
+
 void exch(int* q1, int* q2){
   int temp = *q1;
   *q1 = *q2;

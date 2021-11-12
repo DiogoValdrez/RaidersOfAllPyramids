@@ -1,5 +1,20 @@
 #include"LinkedList.h"
 
+
+/*
+ *  Function:
+ *    initLinkedList;
+ *    freeLinkedList;
+ *    lenghtLinkedList;
+ *    getNextNodeLinkedList;
+ *    getItemLinkedList;
+ *    insertUnsortedLinkedList
+ *
+ *  Description:
+ *    linked list related functions;
+ *          
+ */ 
+
 LinkedList * initLinkedList(void)
 {
     return NULL;
@@ -17,8 +32,6 @@ void freeLinkedList(LinkedList *first, void (* freeItemFnt)(Item))
     }
     return;
 }
-
-
 
 int lengthLinkedList(LinkedList *first)
 {
