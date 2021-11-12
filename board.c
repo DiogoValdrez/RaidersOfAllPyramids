@@ -192,8 +192,6 @@ void createBoard(char *filename, int type){
           cost[i] = (int*)malloc(z*sizeof(int));
         } */
 
-        LinkedList *l;
-        edge *e;
         /* for (i = 0; i < adj_matrix->V; i++){
             l = adj_matrix->adj[i];
 
@@ -255,7 +253,6 @@ void createBoard(char *filename, int type){
         count = 0;
         i = obj;
         j = i;
-        int k;
         LinkedList *list;
         edge *item;
         /* for (k=0; k < adj_matrix->V; k++){

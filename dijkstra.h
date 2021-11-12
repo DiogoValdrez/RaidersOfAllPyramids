@@ -16,11 +16,11 @@ void insert(int array[], int newNum, int size);
 void deleteRoot(int array[], int num, int size);
 void printArray(int array[], int size); */
 
-void PQinit(int);
+void PQinit(int, int*,int*, int);
 void exch(int*, int*);
-bool IsEmpty();
-void PQinsert(int);
-int PQdelmin(int* wt);
+bool IsEmpty(int);
+void PQinsert(int, int*,int*, int);
+int PQdelmin(int* wt, int*, int*);
 bool lessPri(int i1, int i2, int *wt);
 void PQsort(int pTable[], int L, int R);
 void Heapsort(int Table[], int L, int R);

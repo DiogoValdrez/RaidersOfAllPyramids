@@ -63,28 +63,26 @@
 
 
 
-static int *queue;//retirar isto, passar por referencia
-static int free_;
-static int hsize;
-//falta o LessPri
-
-
-
 void GRAPHpfs(graph *G, int s, int *st, int* wt){
+  int hsize = G->V;
+  int free_= 0;
+  int *queue = (int *) malloc(G->V * sizeof(int));
   int v, w;
   LinkedList *t;
-  PQinit(G->V);
   //printf("G->v : %d\n", G->V);
   for (v = 0; v < G->V; v++){
     st[v] = -1;
     wt[v] = INT_MAX;
-    PQinsert(v);
+    PQinsert(v, queue, &free_, hsize);
   }
+  /* for(v = 0; v < G->V; v++){
+    printf("%d\n", queue[v]);
+  } */
   wt[s] = 0;
   st[s] = 0;
   FixUp(queue, G->V - 2, wt);
-  while (!IsEmpty()){
-    int ajuda = PQdelmin(wt);
+  while (!IsEmpty(free_)){
+    int ajuda = PQdelmin(wt, queue, &free_);
     if (wt[v = ajuda] != INT_MAX){
       for(v = 0; v < G->V; v++){
         for (t = G->adj[v]; t != NULL; t = t->next){
@@ -116,9 +114,9 @@ void GRAPHpfs(graph *G, int s, int *st, int* wt){
 
 
 
-void PQinit(int Size) {
+void PQinit(int Size, int* queue, int* free_, int hsize) {
   queue = (int *) malloc(Size * sizeof(int));
-  hsize = Size; free_ = 0; 
+  hsize = Size; *free_ = 0; 
 }
 void exch(int* q1, int* q2){
   int temp = *q1;
@@ -135,22 +133,22 @@ bool lessPri(int i1, int i2, int* wt){//abstração, ITEM
   }  
 }
 
-void PQinsert(int I){//mudei
-  if ((free_+1) < hsize) {
-    queue[free_] = I;
+void PQinsert(int I, int* queue, int* free_, int hsize){//mudei
+  if ((*free_)+1 < hsize) {
+    queue[*free_] = I;
     //FixUp(queue, free_);//pode n ser preciso
-    free_++;
+    (*free_)++;
   }
 }
 
-bool IsEmpty() {
+bool IsEmpty(int free_) {
   return free_ == 0 ? true : false;
 }
 
-int PQdelmin(int* wt) { //mudei isto bue
-  exch(&(queue[0]), &(queue[free_-1]));
-  FixDown(queue,0,free_-1, wt);
-  return queue[--free_]; 
+int PQdelmin(int* wt, int* queue, int* (free_)) { //mudei isto bue
+  exch(&(queue[0]), &(queue[*(free_)-1]));
+  FixDown(queue,0,(*(free_)-1), wt);
+  return queue[--(*free_)]; 
 }
 
 /* void PQsort(Item pTable[], int L, int R)
