@@ -210,9 +210,9 @@ void createBoard(char *filename, int type){
         int* dist = (int*)malloc(z*sizeof(int));
         //int* pred = (int*)malloc(z*sizeof(int));
         GRAPHpfs(adj_matrix, 0, visited, dist);
-        /* for(i = 0; i<z; i++){
+        for(i = 0; i<z; i++){
           printf( "%d\n", visited[i]);
-        }  */
+        } 
 
 
         int obj = bd[var_coord[0]-1][var_coord[1]-1];//pode se meter isto na estrutura

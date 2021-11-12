@@ -70,11 +70,11 @@ static int hsize;
 
 
 
-void GRAPHpfs(graph *G, int s, int *st, int *wt){
+void GRAPHpfs(graph *G, int s, int *st, int* wt){
   int v, w;
   LinkedList *t;
-
   PQinit(G->V);
+  //printf("G->v : %d\n", G->V);
   for (v = 0; v < G->V; v++){
     st[v] = -1;
     wt[v] = INT_MAX;
@@ -82,30 +82,32 @@ void GRAPHpfs(graph *G, int s, int *st, int *wt){
   }
   wt[s] = 0;
   st[s] = 0;
-  //FixDown(queue, G->V, s, wt);
-  FixUp(queue, G->V - 1, wt);//PQdec
+  FixUp(queue, G->V - 2, wt);
   while (!IsEmpty()){
-    //!printf("||%d", wt[0]);
     int ajuda = PQdelmin(wt);
-    //!printf(",%d\n", wt[0]);
-    //printf("||%d,%d||", ajuda, free_);
-    if (wt[v = ajuda] != INT_MAX){//o pq del min é uma variação do max
+    if (wt[v = ajuda] != INT_MAX){
       for(v = 0; v < G->V; v++){
         for (t = G->adj[v]; t != NULL; t = t->next){
-          //!printf("p%d|", (wt[v] + ((edge *)getItemLinkedList(t))->peso));
-          //!printf("%d\n", wt[w = ((edge *)getItemLinkedList(t))->fin]);
-          if (wt[w = ((edge *)getItemLinkedList(t))->fin] > (wt[v] + ((edge *)getItemLinkedList(t))->peso)){//trocar para in se der problemas
-            //!printf("wowwww\n");
+          if (wt[w = ((edge *)getItemLinkedList(t))->fin] > (wt[v] + ((edge *)getItemLinkedList(t))->peso)){
+            if((wt[v] + ((edge *)getItemLinkedList(t))->peso) > 0 )
+            {if(w == 0){
+              printf("%d why00\n", wt[w]);
+            }
             wt[w] = (wt[v] + ((edge *)getItemLinkedList(t))->peso);
-            FixDown(queue, w, free_, wt);//PQdec
-            //FixUp(queue, w, wt);
-            //printf("|||%d", wt[0]);
-            st[w] = v;
+            if(w == 0){
+              printf("%d why2\n", wt[w]);
+            }
+            FixDown(queue, w, free_, wt);
+            st[w] = v;}
           }
         }
       }     
     }  
   }
+  /* for(v = 0; v < G->V; v++){
+    printf("%d\n", st[v]);
+  }
+  printf("\n"); */
   free(queue);
 }
 
@@ -120,13 +122,12 @@ void PQinit(int Size) {
 }
 void exch(int* q1, int* q2){
   int temp = *q1;
-  //printf("tt%d,%d", *q1, *q2);
   *q1 = *q2;
   *q2 = temp;
-  //printf("!%d,%dtt\n", *q1, *q2);
 }
 
 bool lessPri(int i1, int i2, int* wt){//abstração, ITEM
+  //printf("%d, %d, \n", i1, i2);
   if(wt[i1] > wt[i2]){
     return true;
   }else{
@@ -147,15 +148,8 @@ bool IsEmpty() {
 }
 
 int PQdelmin(int* wt) { //mudei isto bue
-  printf("||%d, %d\n", wt[queue[0]], wt[queue[free_ -1]]);
   exch(&(queue[0]), &(queue[free_-1]));
-  printf("||%d, %d\n", wt[queue[0]], wt[queue[free_ -1]]);
   FixDown(queue,0,free_-1, wt);
-  /* printf("free\n\n\n");
-  for(int i=0;i<free_;i++){
-    printf("%d, %d\n", queue[i], wt[i]);
-  }
-  printf("\n");*/
   return queue[--free_]; 
 }
 
@@ -181,8 +175,9 @@ int PQdelmin(int* wt) { //mudei isto bue
   FixDown(Table, L, --Top); }
 } */
 
-void FixUp(int Heap[], int Idx, int* wt)
+void FixUp(int *Heap, int Idx, int* wt)
 {
+  //printf("%d", Heap[Idx]);
   while (Idx > 0 && lessPri(Heap[(Idx-1)/2], Heap[Idx], wt)) {
     exch(&(Heap[Idx]), &(Heap[(Idx-1)/2]));
     Idx = (Idx-1)/2;

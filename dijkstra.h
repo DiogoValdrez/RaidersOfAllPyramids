@@ -24,7 +24,7 @@ int PQdelmin(int* wt);
 bool lessPri(int i1, int i2, int *wt);
 void PQsort(int pTable[], int L, int R);
 void Heapsort(int Table[], int L, int R);
-void FixUp(int Heap[], int Idx, int* wt);
+void FixUp(int *Heap, int Idx, int* wt);
 void FixDown(int Heap[], int Idx, int N, int* wt);
 
 
